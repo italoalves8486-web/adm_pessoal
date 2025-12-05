@@ -1,0 +1,30 @@
+<%= form_with(model: @pessoa) do |f| %>
+  <p>
+    <%= f.label :nome %><br>
+    <%= f.text_field :nome %>
+  </p>
+
+  <p>
+    <%= f.label :cpf %><br>
+    <%= f.text_field :cpf %>
+  </p>
+
+  <p>
+    <%= f.label :rg %><br>
+    <%= f.text_field :rg %>
+  </p>
+
+  <p>
+    <%= f.label :email %><br>
+    <%= f.email_field :email %>
+  </p>
+
+  <p>
+    <%= f.label :whatsapp %><br>
+    <%= f.text_field :whatsapp %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

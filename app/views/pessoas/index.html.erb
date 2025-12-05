@@ -1,0 +1,36 @@
+<h1>Pessoas</h1>
+
+<table>
+  <tr>
+    <th>Nome</th>
+    <th>CPF</th>
+    <th>RG</th>
+    <th>Email</th>
+    <th>WhatsApp</th>
+    <th>Ações</th>
+  </tr>
+
+  <% @pessoas.each do |pessoa| %>
+    <tr>
+      <td><%= pessoa.nome %></td>
+      <td><%= pessoa.cpf %></td>
+      <td><%= pessoa.rg %></td>
+      <td><%= pessoa.email %></td>
+      <td><%= pessoa.whatsapp %></td>
+      <td>
+        <%= link_to 'Mostrar', pessoa_path(pessoa) %> |
+        <%= link_to 'Editar', edit_pessoa_path(pessoa) %> |
+        <%= button_to 'Apagar', 
+            pessoa_path(pessoa),
+            method: :delete, # ESSENCIAL: Garante que a requisição seja DELETE
+            data: { 
+              turbo_confirm: 'Tem certeza?' # Confirmação visual
+            },
+            class: 'btn-delete'
+        %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Nova Pessoa', new_pessoa_path %>

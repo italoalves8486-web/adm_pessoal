@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  web:
+    # Use um Dockerfile mais simples e focado em desenvolvimento, 
+    # ou mude a base do seu Dockerfile atual (veja abaixo).
+    build: . 
+
+    # Sobrescreve o CMD de produção para iniciar o servidor Rails
+    # -b '0.0.0.0' é necessário para expor a porta para o host
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+
+    # Mapeia o código local e a pasta de storage para o container (live reload e persistência do DB)
+    volumes:
+      - .:/rails
+      - bundle_data:/usr/local/bundle # Cache para as gems
+
+    ports:
+      - "3000:3000" # Mapeia a porta 3000 da sua máquina para a porta 3000 do container
+    
+    # Define o ambiente como desenvolvimento, caso não esteja no Dockerfile
+    environment:
+      RAILS_ENV: development
+
+# Volume para cache das gems
+volumes:
+  bundle_data:

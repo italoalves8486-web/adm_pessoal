@@ -1,0 +1,130 @@
+/* Deixa todo o fundo do site preto */
+body {
+  background-color: #000;
+  color: #eee; /* texto claro para enxergar no fundo escuro */
+  font-family: Arial, sans-serif;
+}
+
+/* Títulos brancos */
+h1, h2, h3, h4, h5 {
+  color: #fff;
+}
+
+/* Links azul claros que combinam com fundo preto */
+a {
+  color: #4da3ff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #82c8ff;
+  text-decoration: underline;
+}
+
+/* Tabela com contraste */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #111;  /* fundo da tabela */
+  color: #eee;             /* texto claro */
+}
+
+th {
+  background-color: #222;  /* fundo do cabeçalho */
+  color: #fff;
+  padding: 8px;
+  border-bottom: 2px solid #444;
+}
+
+td {
+  padding: 8px;
+  border-bottom: 1px solid #333;
+}
+
+/* Botões simples */
+button, input[type="submit"] {
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover, input[type="submit"]:hover {
+  background-color: #63b0ff;
+}
+
+/* Inputs com fundo escuro */
+input, textarea {
+  background-color: #111;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+/* Estilos para a mensagem de sucesso/erro (flash-message) */
+.flash-message {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  text-align: center; 
+  font-weight: bold;
+  width: 90%; 
+  max-width: 600px; 
+  margin-left: auto; 
+  margin-right: auto;
+  /* Posicionamento fixo para destaque */
+  position: sticky; 
+  top: 0;
+  z-index: 1000; 
+}
+/* Centraliza o conteúdo principal para um visual limpo e moderno */
+body {
+    max-width: 1000px; /* Limita a largura para melhor leitura */
+    margin: 0 auto;    /* Centraliza na tela */
+    padding: 20px;
+    background-color: #000; /* Mantém o fundo preto */
+}
+
+/* Remove margens e padding padrão para controle total */
+h1, h2, h3, p, ul {
+    margin: 0;
+    padding: 0;
+}
+/* Títulos maiores e com mais peso */
+h1 {
+    font-size: 2.5em; /* Aumenta o tamanho do título principal */
+    font-weight: 700; /* Garante que seja bem negrito */
+    margin-bottom: 30px; /* Mais espaço após o título */
+}
+
+/* Corpo de texto com melhor leitura */
+body {
+    line-height: 1.6; /* Aumenta o espaçamento entre linhas */
+}
+
+/* Cores específicas para o tema escuro */
+.alert-success {
+  background-color: #38761d; /* Verde escuro */
+  color: #fff;
+  border: 1px solid #144908;
+}
+
+.alert-danger {
+  background-color: #cc0000; /* Vermelho escuro */
+  color: #fff;
+  border: 1px solid #990000;
+}
+
+
+/* --- O restante do seu CSS vai aqui --- */
+
+/* Deixa todo o fundo do site preto */
+body {
+  background-color: #000;
+  /* ... etc ... */
+}
+.container { background-color: #0d0d0d; padding: 40px; border-radius: 15px; box-shadow: 10px 10px 20px #000, -10px -10px 20px #222; }
+button:hover { box-shadow: 2px 2px 4px #000, -2px -2px 4px #3a3a3a; background: #63b0ff; }
