@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_01_142933) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_09_124144) do
   create_table "enderecos", force: :cascade do |t|
     t.string "cep"
     t.string "cidade"
@@ -28,8 +28,11 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_01_142933) do
     t.string "email"
     t.string "nome"
     t.string "rg"
+    t.string "telefone"
     t.datetime "updated_at", null: false
-    t.string "whatsapp"
+    t.index ["cpf"], name: "index_pessoas_on_cpf", unique: true
+    t.index ["email"], name: "index_pessoas_on_email", unique: true
+    t.index ["rg"], name: "index_pessoas_on_rg", unique: true
   end
 
   add_foreign_key "enderecos", "pessoas"

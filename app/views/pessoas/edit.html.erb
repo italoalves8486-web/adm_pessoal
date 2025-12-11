@@ -1,34 +1,103 @@
 <h1>Editar Pessoa</h1>
 
-<%= form_with(model: @pessoa, local: true) do |form| %>
-  <p>
-    <%= form.label :nome %><br>
-    <%= form.text_field :nome %>
-  </p>
+<%# ENVOLVE O FORMULÁRIO NO CARD ESCURO %>
+<div class="card">
+  
+  <%# Renderiza o formulário de edição %>
+  <%= render 'form', pessoa: @pessoa %>
 
-  <p>
-    <%= form.label :cpf %><br>
-    <%= form.text_field :cpf %>
-  </p>
+</div>
 
-  <p>
-    <%= form.label :rg %><br>
-    <%= form.text_field :rg %>
-  </p>
+<%# Links de Ação Abaixo do Card %>
+<div class="actions">
+  <%= link_to 'Mostrar', @pessoa, class: "btn-action-link" %>
+  
+  <%# BOTÃO APAGAR (AGORA SÓ ABRE O MODAL): %>
+  <%# O método é GET e a URL é '#' para que ele não tente deletar diretamente. O JS fará o DELETE. %>
+  <%= button_to 'Apagar', '#', 
+      method: :get, 
+      class: "btn-delete", 
+      data: { 
+        action: 'open-delete-modal', # Ação JS para abrir
+        modal_target: 'delete-modal',
+        pessoa_id: @pessoa.id # Passa o ID para o JS saber qual excluir
+      } 
+  %>
+</div>
 
-  <p>
-    <%= form.label :email %><br>
-    <%= form.text_field :email %>
-  </p>
+<%= link_to 'Voltar', pessoas_path, class: "link-back" %>
 
-  <p>
-    <%= form.label :whatsapp %><br>
-    <%= form.text_field :whatsapp %>
-  </p>
+<%# ---------------------------------------------------- %>
+<%# 3. MODAL DE CONFIRMAÇÃO (HTML) %>
+<%# Este bloco de HTML é o popup que aparece na tela. %>
+<%# ---------------------------------------------------- %>
+<div id="delete-modal" class="custom-modal" style="display: none;">
+  <div class="modal-content card">
+    <h2>Confirmação de Exclusão</h2>
+    <p>Você tem certeza que deseja **APAGAR** a pessoa: <strong><%= @pessoa.nome %></strong>?</p>
+    <p>Esta ação não pode ser desfeita.</p>
 
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>
+    <div class="modal-actions">
+      <%# Botão Cancelar (apenas fecha o modal via JS) %>
+      <button class="btn-action-link" data-action="close-modal">Cancelar</button>
+      
+      <%# Botão Confirmar (este sim envia a requisição DELETE via Rails) %>
+      <%= button_to 'Confirmar Exclusão', @pessoa, method: :delete, class: "btn-delete btn-delete-confirm", id: "confirm-delete-button" %>
+    </div>
+  </div>
+</div>
 
-<%= link_to 'Voltar', pessoas_path %>
+<%# ---------------------------------------------------- %>
+<%# 4. LÓGICA DO MODAL (JAVASCRIPT) %>
+<%# Este script controla a abertura/fechamento e atualiza o botão de confirmação. %>
+<%# ---------------------------------------------------- %>
+<script>
+  // Previne a execução se o Rails Turbo não estiver pronto
+  document.addEventListener('turbo:load', () => {
+    
+    const deleteModal = document.getElementById('delete-modal');
+    if (!deleteModal) return;
+
+    // Função para abrir o modal
+    const openModal = (event) => {
+      // Impede a ação padrão (navegar para '#')
+      event.preventDefault();
+      
+      const pessoaId = event.currentTarget.dataset.pessoaId;
+      const confirmButton = document.getElementById('confirm-delete-button');
+
+      // Atualiza a URL de ação do botão de confirmação para garantir que a exclusão é correta
+      if (confirmButton && pessoaId) {
+        // Assume que a URL de exclusão é /pessoas/:id
+        confirmButton.action = `/pessoas/${pessoaId}`;
+      }
+      
+      // Torna o modal visível
+      deleteModal.style.display = 'flex';
+    };
+
+    // Função para fechar o modal
+    const closeModal = () => {
+      deleteModal.style.display = 'none';
+    };
+
+    // Encontra todos os botões que devem abrir o modal
+    const openButtons = document.querySelectorAll('[data-action="open-delete-modal"]');
+    openButtons.forEach(button => {
+      button.addEventListener('click', openModal);
+    });
+
+    // Encontra o botão de fechar (Cancelar)
+    const closeButton = deleteModal.querySelector('[data-action="close-modal"]');
+    if (closeButton) {
+      closeButton.addEventListener('click', closeModal);
+    }
+
+    // Fecha o modal ao clicar fora dele
+    window.addEventListener('click', (event) => {
+      if (event.target === deleteModal) {
+        closeModal();
+      }
+    });
+  });
+</script>

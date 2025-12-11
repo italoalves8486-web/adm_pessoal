@@ -1,51 +1,34 @@
+# app/models/pessoa.rb
+
 class Pessoa < ApplicationRecord
-  # --- VALIDAÇÕES DE PRESENÇA E UNICIDADE ---
+  # --- 1. VALIDAÇÕES DE PRESENÇA E UNICIDADE ---
   validates :nome, presence: true
-  validates :cpf, presence: true, uniqueness: true
+  validates :cpf, uniqueness: true, presence: true
+  validates :rg, uniqueness: true, presence: true
+  validates :email, uniqueness: true, presence: true
+  validates :telefone, uniqueness: true, presence: true
 
-  # --- VALIDAÇÃO DE EMAIL (CORRETA E UNIFICADA) ---
-  validates :email,
-            presence: true,
-            format: {
-              # A Regex está correta para exigir @gmail.com (com \. e \z)
-              with: /\A[\w\.\-\_]+@gmail\.com\z/i,
-              message: "deve ser um endereço @gmail.com válido."
-            }
+  # --- 2. CHAMADA DA VALIDAÇÃO CUSTOMIZADA ---
+  # Isso diz ao Rails para rodar o método abaixo (Passo 3) antes de salvar
+  validate :nome_deve_estar_no_email
 
-  # --- VALIDAÇÃO CUSTOMIZADA ---
-  validate :cpf_valido
-
+  # --- 3. DEFINIÇÃO DO MÉTODO DE VALIDAÇÃO CUSTOMIZADA ---
+  # Ele DEVE ser definido DEPOIS de 'private'
   private
 
-  # --- MÉTODO DE VALIDAÇÃO CUSTOMIZADA ---
-  def cpf_valido
-    return if cpf.blank?
+  def nome_deve_estar_no_email
+    # Se algum dos campos estiver vazio, as validações de presence já cuidam disso.
+    return if nome.blank? || email.blank?
 
-    cpf_limpo = cpf.to_s.gsub(/\D/, "")
+    # 1. Normaliza o nome (remove espaços, acentos, e deixa em minúsculo)
+    nome_normalizado = ActiveSupport::Inflector.transliterate(nome).downcase.gsub(/\s+/, "").delete("^a-z0-9")
 
-    errors.add(:cpf, "deve ter 11 dígitos") unless cpf_limpo.length == 11
+    # 2. Normaliza a parte do email antes do '@'
+    email_prefix = email.split("@").first.downcase
 
-    if cpf_limpo.chars.uniq.length == 1
-      errors.add(:cpf, "não pode ter todos os dígitos iguais")
-      return
-    end
-
-    soma = 0
-    9.times do |i|
-      soma += cpf_limpo[i].to_i * (10 - i)
-    end
-    primeiro_digito = soma % 11
-    primeiro_digito = primeiro_digito < 2 ? 0 : 11 - primeiro_digito
-
-    soma = 0
-    10.times do |i|
-      soma += cpf_limpo[i].to_i * (11 - i)
-    end
-    segundo_digito = soma % 11
-    segundo_digito = segundo_digito < 2 ? 0 : 11 - segundo_digito
-
-    unless cpf_limpo[9].to_i == primeiro_digito && cpf_limpo[10].to_i == segundo_digito
-      errors.add(:cpf, "inválido")
+    # 3. Verifica se o nome normalizado está contido no prefixo do email
+    unless email_prefix.include?(nome_normalizado)
+      errors.add(:email, "deve conter o nome da pessoa (#{nome_normalizado}) para ser um e-mail válido/funcional.")
     end
   end
 end

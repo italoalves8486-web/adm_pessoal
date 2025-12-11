@@ -4,6 +4,6 @@ class AddFieldsToPessoas < ActiveRecord::Migration[8.1]
     add_column :pessoas, :cpf, :string
     add_column :pessoas, :rg, :string
     add_column :pessoas, :email, :string
-    add_column :pessoas, :whatsapp, :string
+    add_column :pessoas, :telefone, :string
   end
 end

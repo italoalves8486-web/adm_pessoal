@@ -1,9 +1,8 @@
 class PessoasController < ApplicationController
-  # Executa set_pessoa antes das ações especificadas
   before_action :set_pessoa, only: %i[show edit update destroy]
 
   def index
-    @pessoas = Pessoa.all
+    @pessoas = Pessoa.all      # <-- RANSAK REMOVIDO
   end
 
   def show
@@ -13,16 +12,14 @@ class PessoasController < ApplicationController
     @pessoa = Pessoa.new
   end
 
-  # MÉTODO CREATE UNIFICADO E CORRIGIDO
+
   def create
     @pessoa = Pessoa.new(pessoa_params)
 
     if @pessoa.save
-      # Flash message definida no redirect_to
-      redirect_to @pessoa, notice: "Pessoa cadastrada com sucesso!"
+       redirect_to @pessoa, notice: "Pessoa cadastrada com sucesso!"
     else
-      # Se falhar, renderiza o formulário NEW novamente, exibindo os erros
-      render :new
+       render :new
     end
   end
 
@@ -48,8 +45,8 @@ class PessoasController < ApplicationController
     @pessoa = Pessoa.find(params[:id])
   end
 
-  # Strong Parameters: permite apenas os atributos seguros
+
   def pessoa_params
-    params.require(:pessoa).permit(:nome, :cpf, :rg, :email, :whatsapp)
+    params.require(:pessoa).permit(:nome, :cpf, :rg, :email, :telefone)
   end
 end

@@ -1,9 +1,60 @@
-<h1><%= @pessoa.nome %></h1>
+<%# app/views/pessoas/show.html.erb %>
 
-<p><strong>CPF:</strong> <%= @pessoa.cpf %></p>
-<p><strong>RG:</strong> <%= @pessoa.rg %></p>
-<p><strong>Email:</strong> <%= @pessoa.email %></p>
-<p><strong>WhatsApp:</strong> <%= @pessoa.whatsapp %></p>
+<div class="header-show">
+  <h1>Visualizar Pessoa: <%= @pessoa.nome %></h1>
+</div>
 
-<%= link_to "Editar", edit_pessoa_path(@pessoa) %> |
-<%= link_to "Voltar", pessoas_path %>
+<%# ESTE CARD VAI EXIBIR OS DETALHES DA PESSOA %>
+<div class="card card-details">
+  
+  <p>
+    <strong>Nome:</strong>
+    <%= @pessoa.nome %>
+  </p>
+  
+  <p>
+    <strong>CPF:</strong>
+    <%= @pessoa.cpf %>
+  </p>
+  
+  <p>
+    <strong>RG:</strong>
+    <%= @pessoa.rg %>
+  </p>
+  
+  <p>
+    <strong>Email:</strong>
+    <%= @pessoa.email %>
+  </p>
+  
+  <p>
+    <strong>Telefone:</strong>
+    <%= @pessoa.telefone %>
+  </p>
+
+</div>
+
+<%# Links de Ação - NOVO POSICIONAMENTO %>
+<div class="footer-actions-container">
+  
+  <%# Botão Voltar (Esquerda) %>
+  <%= link_to 'Voltar', pessoas_path, class: "link-back" %>
+  
+  <%# Grupo de Ações (Direita) %>
+  <div class="actions-group">
+    
+    <%# Botão Editar %>
+    <%= link_to 'Editar', edit_pessoa_path(@pessoa), class: "btn-action-link" %>
+    
+    <%# Botão Apagar - Reorganizei a tag 'a' para ser mais limpa e legível %>
+    <%= link_to 'Apagar', pessoa_path(@pessoa), 
+        class: "btn-delete", 
+        data: { 
+          controller: "confirm-delete", 
+          action: "click->confirm-delete#open",
+          name: @pessoa.nome 
+        } 
+    %>
+
+  </div>
+</div>
