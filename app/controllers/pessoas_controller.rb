@@ -2,7 +2,8 @@ class PessoasController < ApplicationController
   before_action :set_pessoa, only: %i[show edit update destroy]
 
   def index
-    @pessoas = Pessoa.all      # <-- RANSAK REMOVIDO
+    @q = Pessoa.ransack(params[:q])
+    @pessoas = @q.result
   end
 
   def show

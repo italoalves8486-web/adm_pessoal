@@ -122,35 +122,28 @@ h1 {
 .page-content {
     padding-top: 70px; 
     display: flex;
-    flex-direction: column; /* Permite que o h1 fique acima do card */
-    align-items: center; /* Centraliza todos os elementos filhos (h1 e card) */
-    min-height: calc(100vh - 80px); /* Ocupa o restante da tela */
+    flex-direction: column;          /* Permite que o h1 fique acima do card */
+    align-items: center;            /* Centraliza todos os elementos filhos (h1 e card) */
+    min-height: calc(100vh - 70px);      /* Ocupa o restante da tela */
+    
 }
 
 .card {
-    /* Fundo Azul Escuro do Exemplo */
-    background-color: rgba(30, 30, 50, 0.9); 
-    color: #eee;
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow:
-  0 8px 20px rgba(0, 0, 0, 0.25),
-  0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra intensa */
-    max-width: 750px; /* Largura para formulários */
-    width: 90%;
-    margin: 40px 0; /* Espaçamento vertical */
-    /* A animação é definida no final do arquivo para evitar duplicação */
+  background: rgba(30,30,50,.9);
+  color: #eee;
+  border-radius: 15px;
+  padding: 20px;
+
+  width: 90%;              /* NÃO 100% */
+  max-width: 900px;        /* limite real */
+
+  margin-left: auto;       /* 👈 CENTRALIZA */
+  margin-right: auto;      /* 👈 CENTRALIZA */
+
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
+  animation: fadeSlide .7s ease forwards;
 }
 
-
-/* --- 4. ESTILOS DE TABELA --- */
-.table-card {
-    max-width: 1200px; /* AUMENTADO para dar mais espaço à tabela */
-    width: 95%; /* Garante margem nas laterais */
-    margin: 40px auto 50px auto; /* Centraliza a tabela horizontalmente */
-    padding: 20px; /* Adiciona padding interno para a tabela */
-    box-sizing: border-box; /* Inclui padding na largura total */
-}
 
 table {
     width: 100%;
@@ -174,6 +167,10 @@ table td {
     padding: 15px 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Linhas separadoras sutis */
     font-size: 0.95em;
+    .table td, .table th {
+  vertical-align: middle;
+}
+
 }
 
 /* Força a última coluna (Ações) a ter mais espaço */
@@ -304,7 +301,8 @@ table tr:hover {
     font-weight: bold;
     display: inline-block;
     width: 120px; 
-    margin-right: 10px;
+    margin-right: px;
+    
 }
 
 /* Estilo para o link "Voltar" (link de navegação simples em formulários/detalhes) */
@@ -658,3 +656,4 @@ table tr:hover {
 .hidden {
   display: none !important;
 }
+
