@@ -1,6 +1,6 @@
-<div class="card">
-  <h2 class="card-title">Nova Pessoa</h2>
-
+<div class="page-content">
+  <div class="card">
+    <h2 class="card-title">Nova Pessoa</h2>
 
     <%= form_with(model: @pessoa, local: true) do |form| %>
 
@@ -35,8 +35,6 @@
 
     <% end %>
 
-    <a href="<%= pessoas_path %>" class="link-back">Voltar</a>
-
+    <%= link_to "Voltar", pessoas_path, class: "link-back" %>
   </div>
-
 </div>

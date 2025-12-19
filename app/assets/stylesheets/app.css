@@ -1,659 +1,311 @@
 /* -------------------------------------------------------------------
- * ADM PESSOAL - ESTILOS PROFISSIONAIS
+ * ADM PESSOAL - CSS COMPLETO UNIFICADO
  * ------------------------------------------------------------------- */
-
-/* 1. VARIÁVEIS DE COR E TIPOGRAFIA */
+/* ================= VARIÁVEIS ================= */
 :root {
-  --color-primary: #1C2B57; /* Azul Escuro Primário (Navy) */
-  --color-secondary: #0A1128; /* Azul Escuro de Fundo (Quase Preto) */
-  --color-accent: #2A9D8F; /* Verde Água (Ciano) para Ações Positivas */
-  --color-danger: #E63946; /* Vermelho para Ações Destrutivas */
-  --color-text-light: #F8F9FA; /* Texto Claro */
-  --color-text-dark: #343A40; /* Texto Escuro */
-  --color-card-bg: rgba(28, 43, 87, 0.9); /* Fundo do Cartão Semitransparente (aumentado para contraste) */
-  --font-family: 'Arial', sans-serif;
+  --color-primary: #1C2B57;
+  --color-accent: #2A9D8F;
+  --color-danger: #CC0000;
+  --color-text-light: #E5E7EB;
+  --color-text-muted: #CBD5F5;
 }
 
-/* 🚨 NOVO: ANIMAÇÃO DE ENTRADA DO CARD 🚨 */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ================= RESET ================= */
+* {
+  box-sizing: border-box;
 }
-
-
 body {
-    /* Fundo Gradiente: Roxo para Azul/Ciano */
-    background: linear-gradient(135deg, #6a5acd 0%, #4a90e2 50%, #00bcd4 100%);
-    font-family: Arial, sans-serif;
-    color: #eee; /* Cor do texto geral (claro) */
-    margin: 0;
-    min-height: 100vh;
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      rgba(15, 23, 42, 0.60), /* TRANSPARÊNCIA DO FUNDO DE LOGIN */
+      rgba(15, 23, 42, 0.60)
+    ),
+    url("/background.jpg") center / cover no-repeat fixed;
+
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 
-/* --- AJUSTE DE TÍTULO PRINCIPAL (h1) --- */
-h1 {
-    color: white; /* Título Branco para destaque */
-    font-size: 2.2em;
-    font-weight: 700;
-    margin-bottom: 30px;
-    text-align: center; /* Centraliza títulos dentro do .page-content */
+
+/* ================= NAVBAR ================= */
+.navbar {
+  background: rgba(0,0,0,0.55) !important;
+  backdrop-filter: blur(6px);
 }
 
-/* --- 2. CABEÇALHO (NAVBAR) - Mantendo a Funcionalidade Fixa --- */
-.main-header {
-    background-color: rgba(0, 0, 0, 0.4); /* Fundo escuro semi-transparente */
-    color: white;
-    padding: 15px 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: none; /* Remove a sombra forte */
+.navbar .nav-link {
+  color: #E5E7EB !important;
+  font-weight: 500;
 }
 
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+.navbar .nav-link:hover {
+  color: #ffffff !important;
 }
 
-/* Estilizando o logo/link principal para parecer um botão de navegação */
-.app-logo .logo-link {
-    font-size: 1.4em;
-    font-weight: bold;
-    color: #fff; 
-    text-decoration: none;
-    /* Adiciona padding e arredondamento para dar aparência de botão */
-    padding: 8px 15px;
-    border-radius: 4px;
-    transition: background-color 0.2s, color 0.2s;
-    cursor: pointer; 
+/* ÍCONE LOGOUT */
+.logout-icon {
+  font-size: 22px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: color 0.2s ease;
 }
 
-/* Efeito de hover/clique para feedback visual */
-.app-logo .logo-link:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil ao passar o mouse */
-    color: #f0f0f0;
+.logout-icon:hover {
+  color: #dc3545;
 }
 
-.main-header nav a {
-    color: #ccc;
-    text-decoration: none;
-    margin-left: 10px;
-    padding: 8px 15px; /* Alinha o link com o botão */
-    display: inline-block;
-    box-sizing: border-box;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-.main-header nav a:hover {
-    color: #fff;
+/* ================= HOME ================= */
+.home-wrapper {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
 }
 
-/* Estilo para o botão Nova Pessoa no Navbar */
-.btn-navbar-destaque {
-    background-color: #38a169 !important; /* Verde do exemplo */
-    color: white !important;
-    padding: 8px 15px !important;
-    border-radius: 4px;
-    text-decoration: none !important;
-    font-weight: bold;
-    font-size: 0.9em;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    transition: background-color 0.2s;
+.home-container {
+  background: rgba(30, 30, 50, 0.92);
+  width: 100%;
+  max-width: 720px;
+  padding: 4rem 3.5rem;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
 }
 
-.btn-navbar-destaque:hover {
-    background-color: #277e52 !important;
+.home-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
 }
 
-/* --- 3. CONTAINER DE CONTEÚDO (CARD) --- */
-.page-content {
-    padding-top: 70px; 
-    display: flex;
-    flex-direction: column;          /* Permite que o h1 fique acima do card */
-    align-items: center;            /* Centraliza todos os elementos filhos (h1 e card) */
-    min-height: calc(100vh - 70px);      /* Ocupa o restante da tela */
-    
+.home-subtitle {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
 }
 
+.home-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+/* ================= CARDS ================= */
 .card {
-  background: rgba(30,30,50,.9);
+  background: rgba(30,30,50,0.9);
   color: #eee;
   border-radius: 15px;
   padding: 20px;
-
-  width: 90%;              /* NÃO 100% */
-  max-width: 900px;        /* limite real */
-
-  margin-left: auto;       /* 👈 CENTRALIZA */
-  margin-right: auto;      /* 👈 CENTRALIZA */
-
+  max-width: 900px;
+  margin: auto;
   box-shadow: 0 8px 20px rgba(0,0,0,.25);
-  animation: fadeSlide .7s ease forwards;
+  animation: fadeSlide 0.6s ease forwards;
 }
 
+/* ================= TÍTULOS ================= */
+h1 {
+  text-align: center;
+  color: white;
+  font-weight: 700;
+}
 
+/* ================= TABELAS ================= */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    color: white;
+  width: 100%;
+  border-collapse: collapse;
+  color: white;
+}
+
+table th,
+table td {
+  padding: 15px 10px;
 }
 
 table thead {
-    border-bottom: 2px solid #4a90e2; /* Linha azul clara para separar o cabeçalho */
+  border-bottom: 2px solid #4a90e2;
 }
-
-table th {
-    padding: 15px 10px;
-    text-align: left;
-    font-weight: 600;
-    font-size: 0.95em;
-    color: #a0aaee; /* Cor clara para os títulos das colunas */
-}
-
-table td {
-    padding: 15px 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Linhas separadoras sutis */
-    font-size: 0.95em;
-    .table td, .table th {
-  vertical-align: middle;
-}
-
-}
-
-/* Força a última coluna (Ações) a ter mais espaço */
-table th:last-child,
-table td:last-child {
-    min-width: 180px; /* Largura mínima para os três botões caberem */
-}
-
 
 table tr:hover {
-    background-color: rgba(255, 255, 255, 0.05); /* Efeito hover suave */
+  background: rgba(255,255,255,0.05);
 }
 
-
-/* --- 5. FORMULÁRIO E CAMPOS --- */
+/* ================= FORMULÁRIOS ================= */
 .field label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #ccc;
-}
-
-.field input[type="text"],
-.field input[type="email"],
-.field input[type="number"],
-.field input[type="tel"] { /* Adicionado 'tel' para whatsapp/telefone */
-    width: 100%;
-    padding: 16px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 6px;
-    background-color: white; /* Campos Brancos */
-    color: #333; /* Texto escuro dentro do campo */
-    font-size: 1em;
-    box-sizing: border-box;
-}
-
-.field input:focus {
-    outline: 2px solid #4a90e2; /* Borda azul ao focar */
-}
-
-/* --- 6. BOTÕES DE AÇÃO --- */
-.actions input[type="submit"] {
-    /* Botão principal verde */
-    background-color: #38a169; 
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: bold;
-    transition: background-color 0.2s;
-    width: 100%; /* Botão com largura total, como no exemplo */
-    margin-top: 30px;
-}
-
-.actions input[type="submit"]:hover {
-    background-color: #277e52;
-}
-
-/* NOVO: Botão de Ver Detalhes (Mostrar) - Azul/Ciano */
-.btn-view {
-    background-color: #4a90e2; /* Azul vibrante, combinando com o fundo */
-    color: white;
-    padding: 6px 10px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 0.9em;
-    transition: background-color 0.2s, transform 0.1s;
-    white-space: nowrap; 
-}
-
-.btn-view:hover {
-    background-color: #3b7ad0; /* Hover azul mais escuro */
-    transform: translateY(-1px);
-}
-
-/* Botões da Tabela (Editar) - Verdes */
-.btn-action { /* Agora focado principalmente em EDITAR ou ações de confirmação positiva */
-    background-color: #38a169; /* Verde padrão */
-    color: white;
-    padding: 6px 10px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 0.9em;
-    transition: background-color 0.2s;
-    white-space: nowrap; 
-}
-
-.btn-action:hover {
-    background-color: #277e52; /* Hover verde escuro */
-}
-
-/* Botão de Apagar - Cor Vermelha para indicar Ação Destrutiva */
-.btn-delete {
-    background-color: #cc0000; /* Vermelho forte para perigo */
-    color: white;
-    padding: 6px 10px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 0.9em;
-    transition: background-color 0.2s;
-    white-space: nowrap; 
-}
-
-.btn-delete:hover {
-    background-color: #990000; /* Hover vermelho escuro */
-}
-
-/* Alinhamento dos botões na tabela */
-.table-actions {
-    display: flex;
-    gap: 5px; /* Define o espaço entre os botões */
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-}
-
-/* --- 7. ESTILOS DE DETALHES E ANIMAÇÕES --- */
-
-.card-details p {
-    font-size: 1.1em;
-    line-height: 1.8;
-}
-
-.card-details strong {
-    color: #a0aaee; 
-    font-weight: bold;
-    display: inline-block;
-    width: 120px; 
-    margin-right: px;
-    
-}
-
-/* Estilo para o link "Voltar" (link de navegação simples em formulários/detalhes) */
-.link-back {
-    color: #a0aaee; /* Cor clara */
-    text-decoration: none;
-    font-weight: 500;
-    display: inline-block;
-    margin-top: 20px;
-    padding: 5px 0;
-    transition: color 0.2s;
-}
-
-.link-back:hover {
-    color: white;
-}
-
-/* Linha separadora */
-.card-details hr {
-    border: 0;
-    height: 1px;
-    background-color: rgba(255, 255, 255, 0.15);
-    margin: 20px 0;
-}
-
-/* Efeitos de Título e Botões */
-.card-title {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 28px;
+  display: block;
+  margin-bottom: 5px;
   font-weight: bold;
-  color: #ffffff;
-
-  /* Efeito glow */
-  text-shadow:
-    0 0 4px #ffffff,
-    0 0 8px #7bd6ff,
-    0 0 12px #4fa8ff,
-    0 0 16px #3b82f6;
-  animation: titleGlow 3s ease-in-out infinite;
+  color: #ccc;
 }
 
-.card {
-  /* Animação unificada de entrada */
-  animation: fadeSlide 0.7s ease forwards;
+.field input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 6px;
+  border: none;
+  margin-bottom: 20px;
 }
 
-@keyframes titleGlow {
-  0%, 100% {
-    text-shadow: 0 0 6px rgba(255,255,255,0.6);
-  }
-  50% {
-    text-shadow: 0 0 14px rgba(255,255,255,0.9);
-  }
+/* ================= BOTÕES ================= */
+.btn-main {
+  background: #1d4ed8;
+  color: white;
+  padding: 0.75rem 1.8rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
 }
 
+.btn-outline {
+  background: transparent;
+  color: #1d4ed8;
+  border: 1px solid #1d4ed8;
+  padding: 0.75rem 1.8rem;
+  border-radius: 6px;
+}
+
+.btn-delete {
+  background: var(--color-danger);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+/* ================= DEVise ================= */
+.auth-body {
+  min-height: 100vh;
+  background:
+    linear-gradient(135deg, #1c2b57, #2a9d8f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ================= ANIMAÇÕES ================= */
 @keyframes fadeSlide {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-15px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+/* ================= AUTH / LOGIN ================= */
 
-.btn-primary {
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn-primary:hover {
-  transform: scale(1.07);
-  box-shadow: 0 0 18px rgba(0, 255, 120, 0.8),
-              0 0 28px rgba(0, 255, 120, 0.6);
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  background: rgba(20, 25, 40, 0.92);
+  padding: 2.5rem 2.2rem;
+  border-radius: 14px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
 }
 
-.btn-primary:active {
-  transform: scale(0.95);
-  box-shadow: 0 0 8px rgba(0, 255, 120, 0.5);
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
-.btn-delete {
-  display: inline-block !important;
+.auth-header h1 {
+  color: #fff;
+  font-size: 1.6rem;
+  margin-bottom: 0.3rem;
+}
+
+.auth-header p {
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+/* CAMPOS */
+
+.auth-field {
   position: relative;
-  z-index: 10;
+  margin-bottom: 1.2rem;
 }
 
-.actions form {
-  display: inline-block !important;
-  margin: 0;
+.auth-field i {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 1rem;
 }
 
-/* ---------------------------------------------------------------------- */
-/* --- 8.5. ESTILOS DE AÇÃO DE RODAPÉ (PÁGINA SHOW/DETALHES) - REVISADO --- */
-/* ---------------------------------------------------------------------- */
-
-/* Container que envolve todos os botões no rodapé do card de detalhes */
-/* Garante alinhamento entre o botão Voltar (esquerda) e as Ações (direita) */
-.footer-actions-container {
-    display: flex;
-    justify-content: space-between; /* Alinha itens à esquerda e à direita */
-    align-items: center;
-    max-width: 750px; /* Deve seguir a largura máxima do card */
-    width: 100%;
-    margin-top: 30px; /* Espaço em relação ao conteúdo do card */
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Separador sutil */
-}
-
-/* Grupo de botões Editar e Apagar */
-.actions-group {
-    display: flex;
-    gap: 15px; /* Espaçamento consistente entre Editar e Apagar */
-}
-
-/* Estilizando o link "Voltar" */
-.link-back {
-    color: white; /* Cor do texto */
-    text-decoration: none;
-    font-weight: bold;
-    padding: 10px 20px; /* Tamanho padronizado */
-    border-radius: 6px;
-    background-color: #4a90e2; /* Azul para navegação */
-    transition: background-color 0.2s, transform 0.1s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-.link-back:hover {
-    background-color: #3b7ad0;
-    transform: translateY(-1px);
-}
-
-/* Estilizando o botão Editar (btn-action) no rodapé */
-/* NOTE: Presumindo que o link "Editar" usa a classe .btn-action ou .btn-action-link,
-   mas para a página SHOW, vamos garantir o tamanho e cor consistentes do grupo. */
-.footer-actions-container .btn-action-link,
-.footer-actions-container .btn-delete,
-.footer-actions-container .btn-action { 
-    padding: 10px 20px; /* Tamanho padronizado e consistente */
-    font-size: 1em;
-    font-weight: bold;
-}
-
-/* Garantindo que o botão Editar use a cor verde de Ação Principal */
-.footer-actions-container .btn-action-link,
-.footer-actions-container .btn-action {
-    background-color: #38a169 !important; /* Verde */
-}
-
-/* O botão de Apagar já está coberto por .btn-delete */
-
-/* ---------------------------------------------------- */
-/* --- 8. ESTILOS DO MODAL DE CONFIRMAÇÃO (NOVO) --- */
-/* ---------------------------------------------------- */
-.custom-modal {
-    /* Fundo escuro transparente que cobre a tela toda */
-    display: none; /* Escondido por padrão, o JS o torna 'flex' */
-    position: fixed;
-    z-index: 1000; /* Acima de todo o conteúdo */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    /* Usa flexbox para centralizar o conteúdo */
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.8); /* Fundo preto mais escuro para destaque */
-    /* Animação para que o modal apareça suavemente */
-    animation: fadeInModal 0.3s ease-out;
-}
-
-/* O modal-content já herda os estilos .card (fundo escuro, sombra) */
-.modal-content {
-    /* Resetando a animação de deslize para o modal aparecer no lugar */
-    animation: fadeInModalContent 0.3s ease-out; 
-    padding: 30px;
-    text-align: center;
-}
-
-.modal-content h2 {
-    color: #cc0000; /* Título de alerta em vermelho */
-    margin-top: 0;
-    font-size: 1.6em;
-}
-
-.modal-content p {
-    margin-bottom: 25px;
-    font-size: 1em;
-    color: #bbb;
-}
-
-.modal-content strong {
-    color: white; /* Nome da pessoa em destaque */
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: space-around;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-/* Botão Cancelar (usa o estilo de link de ação, mas alteramos a cor para Azul/Roxo) */
-.modal-actions .btn-action-link {
-    flex: 1; 
-    width: auto; 
-    padding: 10px 15px;
-    font-size: 1em;
-    background-color: #4a90e2; /* Azul que combina com o fundo */
-    border-radius: 6px;
-    border: none; /* Garantir que não há borda extra se for um <button> */
-    cursor: pointer;
-    transition: background-color 0.2s;
-    font-weight: bold;
-}
-
-.modal-actions .btn-action-link:hover {
-    background-color: #3b7ad0; /* Azul um pouco mais escuro no hover */
-}
-
-/* O botão de Confirmação (btn-delete-confirm) já herda o estilo .btn-delete, que é vermelho */
-.modal-actions .btn-delete-confirm {
-    flex: 1; 
-    width: auto; 
-    padding: 10px 15px;
-    font-size: 1em;
-    font-weight: 700;
-}
-
-/* Animação para o modal aparecer suavemente */
-@keyframes fadeInModal {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes fadeInModalContent {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
-.link-back-in-card {
-    color: #a0aaee; 
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.confirm-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  backdrop-filter: blur(3px);
-}
-
-.confirm-modal.show {
-  display: flex;
-  animation: fadeIn 0.3s ease forwards;
-}
-
-.confirm-box {
-  background: #1e1e32;
-  padding: 25px;
-  border-radius: 10px;
-  text-align: center;
-  width: 320px;
-  color: white;
-  animation: slideUp 0.3s ease forwards;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-}
-
-.confirm-buttons {
-  margin-top: 25px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.btn-cancel {
-  padding: 10px 18px;
-  background: #555;
+.auth-field input {
+  width: 100%;
+  height: 42px;
+  padding: 0 14px 0 40px;
+  border-radius: 8px;
   border: none;
-  color: white;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
+  outline: none;
+  background: #f1f5f9;
+  font-size: 0.95rem;
 }
 
-.btn-confirm {
-  padding: 10px 18px;
-  background: #cc0000;
+.auth-field input:focus {
+  box-shadow: 0 0 0 2px #2563eb;
+}
+
+/* BOTÃO */
+
+.auth-actions {
+  margin-top: 1.6rem;
+}
+
+.btn-auth {
+  width: 100%;
+  height: 44px;
+  background: #2563eb;
   border: none;
+  border-radius: 8px;
   color: white;
-  font-weight: bold;
-  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-.btn-confirm:hover {
-  background: #990000;
+.btn-auth:hover {
+  background: #1d4ed8;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
+/* LINKS */
 
-@keyframes slideUp {
-  from { transform: translateY(25px); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
-}
-
-/* MODAL FUNDO */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-/* MODAL CONTEÚDO */
-.modal-content {
-  background: #fff;
-  padding: 25px;
-  border-radius: 12px;
-  width: 380px;
+.auth-links {
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  transform: scale(0.85);
-  opacity: 0;
-  transition: all 0.2s ease-out;
+  margin-top: 1.2rem;
 }
 
-/* animação de entrada */
-.fade-in .modal-content {
-  opacity: 1;
-  transform: scale(1);
+.auth-links a {
+  font-size: 0.85rem;
+  color: #93c5fd;
+  text-decoration: none;
 }
 
-/* animação de saída */
-.fade-out .modal-content {
-  opacity: 0;
-  transform: scale(0.85);
+.auth-links a:hover {
+  text-decoration: underline;
 }
-
-.hidden {
-  display: none !important;
-}
-

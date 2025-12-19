@@ -1,4 +1,5 @@
 class PessoasController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_pessoa, only: %i[show edit update destroy]
 
   def index
@@ -13,14 +14,13 @@ class PessoasController < ApplicationController
     @pessoa = Pessoa.new
   end
 
-
   def create
     @pessoa = Pessoa.new(pessoa_params)
 
     if @pessoa.save
-       redirect_to @pessoa, notice: "Pessoa cadastrada com sucesso!"
+      redirect_to @pessoa, notice: "Pessoa cadastrada com sucesso!"
     else
-       render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -31,7 +31,7 @@ class PessoasController < ApplicationController
     if @pessoa.update(pessoa_params)
       redirect_to @pessoa, notice: "Pessoa atualizada com sucesso."
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -45,7 +45,6 @@ class PessoasController < ApplicationController
   def set_pessoa
     @pessoa = Pessoa.find(params[:id])
   end
-
 
   def pessoa_params
     params.require(:pessoa).permit(:nome, :cpf, :rg, :email, :telefone)
