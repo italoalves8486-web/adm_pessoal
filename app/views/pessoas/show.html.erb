@@ -32,29 +32,25 @@
     <%= @pessoa.telefone %>
   </p>
 
-</div>
-
-<%# Links de Ação - NOVO POSICIONAMENTO %>
-<div class="footer-actions-container">
-  
-  <%# Botão Voltar (Esquerda) %>
-  <%= link_to 'Voltar', pessoas_path, class: "link-back" %>
-  
-  <%# Grupo de Ações (Direita) %>
-  <div class="actions-group">
+<div class="actions-group">
+    <%= link_to 'Voltar', pessoas_path, class: "btn-back-style" %>
     
-    <%# Botão Editar %>
-    <%= link_to 'Editar', edit_pessoa_path(@pessoa), class: "btn-action-link" %>
+    <%= link_to 'Editar', edit_pessoa_path(@pessoa), class: "btn-edit-style" %>
     
-    <%# Botão Apagar - Reorganizei a tag 'a' para ser mais limpa e legível %>
     <%= link_to 'Apagar', pessoa_path(@pessoa), 
         class: "btn-delete", 
         data: { 
+          turbo_method: :delete, 
+          turbo_confirm: "Tem certeza que deseja apagar #{@pessoa.nome}?",
           controller: "confirm-delete", 
           action: "click->confirm-delete#open",
           name: @pessoa.nome 
         } 
     %>
+  </div>
+
+<%# Links de Ação - NOVO POSICIONAMENTO %>
+<div class="footer-actions-container">
 
   </div>
 </div>

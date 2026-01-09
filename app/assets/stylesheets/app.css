@@ -1,50 +1,61 @@
-/* -------------------------------------------------------------------
- * ADM PESSOAL - CSS COMPLETO UNIFICADO
- * ------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap');
+
 /* ================= VARIÁVEIS ================= */
+
 :root {
   --color-primary: #1C2B57;
   --color-accent: #2A9D8F;
-  --color-danger: #CC0000;
+  --color-danger: #e94a4a;
+
   --color-text-light: #E5E7EB;
   --color-text-muted: #CBD5F5;
+
+  /* GLASS */
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 25px 60px rgba(0,0,0,0.6);
+  --glass-blur: blur(14px);
 }
 
 /* ================= RESET ================= */
+
 * {
   box-sizing: border-box;
 }
+
 body {
   min-height: 100vh;
 
   background:
     linear-gradient(
-      rgba(48, 46, 46, 0.6), /* TRANSPARÊNCIA DO FUNDO DE LOGIN */
+      rgba(48, 46, 46, 0.6),
       rgba(255, 255, 255, 0.6)
     ),
-    url("/background-v2.jpg") center / cover no-repeat fixed;
+    url("/ola.jpg") center / cover no-repeat fixed;
+
+  backdrop-filter: blur(10px);
 
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-
-
 /* ================= NAVBAR ================= */
+
 .navbar {
   background: rgba(0,0,0,0.55) !important;
   backdrop-filter: blur(6px);
 }
 
 .navbar .nav-link {
-  color: #E5E7EB !important;
+  color: #ffffff !important;
   font-weight: 500;
 }
 
 .navbar .nav-link:hover {
-  color: #ffffff !important;
+  color: #3487d4 !important;
 }
 
-/* ÍCONE LOGOUT */
+/* LOGOUT ICON */
+
 .logout-icon {
   font-size: 22px;
   color: #ffffff;
@@ -56,29 +67,66 @@ body {
   color: #dc3545;
 }
 
+/* ================= GLASS CARD BASE ================= */
+
+.card,
+.home-container,
+.auth-card,
+.login-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+
+  box-shadow: var(--glass-shadow);
+  color: #ffffff;
+  
+}
+
 /* ================= HOME ================= */
+
+
+.auth-wrapper {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.auth-main-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;                   
+  font-weight: 400;                 
+  color: #ffffff;
+  margin-bottom: 6rem;
+  text-align: center;
+  text-transform: uppercase;        
+  letter-spacing: 3px;
+}
+
+.login-input {
+  color: white !important;
+
+}
 .home-wrapper {
   min-height: calc(100vh - 64px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
 }
 
 .home-container {
-  background: rgba(30, 30, 50, 0.92);
-  width: 100%;
   max-width: 720px;
+  width: 100%;
   padding: 4rem 3.5rem;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
 }
 
 .home-title {
   font-size: 2.2rem;
   font-weight: 700;
-  color: #ffffff;
   margin-bottom: 1rem;
 }
 
@@ -94,26 +142,38 @@ body {
   gap: 1rem;
 }
 
-/* ================= CARDS ================= */
+/* ================= CARD PADRÃO ================= */
+
 .card {
-  background: rgba(30,30,50,0.9);
-  color: #eee;
-  border-radius: 15px;
-  padding: 20px;
+  padding: 24px;
   max-width: 900px;
   margin: auto;
-  box-shadow: 0 8px 20px rgba(0,0,0,.25);
   animation: fadeSlide 0.6s ease forwards;
+  margin-top: 50px;
+}
+
+/* ================= CARD DO CADASTRO ================= */
+.card-cadastro {
+  background: rgba(255, 255, 255, 0.1); /* Branco bem transparente */
+  backdrop-filter: blur(15px);          /* O segredo do efeito fosco */
+  -webkit-backdrop-filter: blur(15px);   /* Suporte para Safari */
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 40px;
+  width: 100%;
+  max-width: 450px; /* Evita que o input estique na tela toda */
 }
 
 /* ================= TÍTULOS ================= */
+
 h1 {
   text-align: center;
-  color: white;
   font-weight: 700;
+  color: #fff;
 }
 
 /* ================= TABELAS ================= */
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -134,6 +194,7 @@ table tr:hover {
 }
 
 /* ================= FORMULÁRIOS ================= */
+
 .field label {
   display: block;
   margin-bottom: 5px;
@@ -141,59 +202,247 @@ table tr:hover {
   color: #ccc;
 }
 
+
 .field input {
   width: 100%;
   padding: 14px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
   margin-bottom: 20px;
+  background: rgba(255,255,255,0.85);
 }
 
 /* ================= BOTÕES ================= */
-.btn-main {
-  background: #1d4ed8;
-  color: white;
-  padding: 0.75rem 1.8rem;
-  border-radius: 6px;
+
+.btn-auth {
+  width: 100%;
+  height: 50px;
+  background: #ffffff;
+  color: #1C2B57; /* Cor primária do seu root */
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+  margin-top: 1rem;
+}
+
+.btn-auth:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+.login-links {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-links a {
+  color: #93c5fd;
   text-decoration: none;
-  font-weight: 600;
+  font-size: 0.85rem;
+  transition: color 0.2s;
 }
 
-.btn-outline {
-  background: transparent;
-  color: #1d4ed8;
-  border: 1px solid #1d4ed8;
-  padding: 0.75rem 1.8rem;
-  border-radius: 6px;
+.login-links a:hover {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
-.btn-delete {
-  background: var(--color-danger);
-  color: white;
-  padding: 8px 14px;
-  border-radius: 6px;
-  text-decoration: none;
-}
+/* ================= AUTH / LOGIN ================= */
 
-/* ================= DEVise ================= */
-.auth-body {
+.auth-wrapper {
   min-height: 100vh;
-  background:
-    linear-gradient(135deg, #1c2b57, #2a9d8f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-card {
+  max-width: 400px;
+  width: 100%;
+  padding: 3rem 2.5rem;
+  
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  
+  text-align: center;
+}
+
+.auth-header h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #ffffff;
+}
+
+/* ================= AUTH HEADER ================= */
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-header h1 {
+  font-size: 1.6rem;
+}
+
+.auth-header p {
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+/* ================= INPUTS COM ÍCONE ================= */
+
+.auth-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1); 
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.auth-field:focus-within {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.auth-field .icon-box {
+  min-width: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.auth-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
+.auth-field .icon-box svg {
+  filter: invert(1) brightness(2); 
+  width: 24px !important; 
+  height: 24px !important;
+}
+
+.auth-field .login-input {
+  flex: 1;
+  height: 50px;
+  border: none !important; 
+  background: transparent !important;
+  color: #ffffff28;
+  font-size: 1rem;
+  padding: 0 15px 0 5px;
+  outline: none;
+}
+
+.auth-field .login-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ================= AUTH ACTIONS ================= */
+
+.auth-actions {
+  margin-top: 2rem; 
+}
+
+.btn-auth {
   width: 100%;
-  max-width: 420px;
+  height: 48px; 
+  background: var(--color-accent); 
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-auth:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-auth:hover {
+  background: #a2a5af;
+}
+.auth-field input:focus, 
+.login-input:focus,
+.form-control:focus {
+  outline: none !important; 
+  box-shadow: none !important; 
+}
+
+.auth-field:focus-within {
+  border-color: rgba(255, 255, 255, 0.5); 
+  background: rgba(255, 255, 255, 0.15); 
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+}
+
+/* ================= LOGIN ================= */
+
+.login-title {
+  text-align: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.6rem;
+}
+
+.login-input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.85);
+}
+
+.login-input:focus {
+  box-shadow: 0 0 0 2px #2563eb;
+}
+
+.login-button {
+  width: 100%;
+  padding: 0.6rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.login-button:hover {
+  background: #1d4ed8;
+}
+
+/* ================= LINKS ================= */
+
+.auth-links,
+.login-links {
+  text-align: center;
+  margin-top: 1.2rem;
+}
+
+.auth-links a,
+.login-links a {
+  font-size: 0.85rem;
+  color: #93c5fd;
+  text-decoration: none;
+}
+
+.auth-links a:hover,
+.login-links a:hover {
+  text-decoration: underline;
 }
 
 /* ================= ANIMAÇÕES ================= */
+
 @keyframes fadeSlide {
   from {
     opacity: 0;
@@ -204,212 +453,185 @@ table tr:hover {
     transform: translateY(0);
   }
 }
-/* ================= AUTH / LOGIN ================= */
-
-.auth-wrapper {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.page-content {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
 }
+/* ===============PESSOAS==============*/
 
-.auth-card {
-  width: 100%;
-  max-width: 380px;
-  background: rgba(20, 25, 40, 0.92);
-  padding: 2.5rem 2.2rem;
-  border-radius: 14px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
-}
 
-.auth-header {
-  text-align: center;
+/* Título fora do card */
+.card-title h1 {
+  font-size: 2.5rem;
   margin-bottom: 2rem;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-.auth-header h1 {
-  color: #fff;
-  font-size: 1.6rem;
-  margin-bottom: 0.3rem;
+/* O card de busca e listagem */
+.search-form-container.card {
+  max-width: 1100px; /* Um pouco mais largo para a tabela */
+  width: 95%;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
-.auth-header p {
-  color: #9ca3af;
-  font-size: 0.9rem;
+/* Estilização dos inputs de busca dentro do vidro */
+.search-form-container .form-control {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 12px;
+  transition: all 0.3s ease;
 }
 
-/* CAMPOS */
-
-.auth-field {
-  position: relative;
-  margin-bottom: 1.2rem;
+.search-form-container .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.5);
 }
 
-.auth-field i {
-  position: absolute;
-  top: 50%;
-  left: 14px;
-  transform: translateY(-50%);
-  color: #9ca3af;
-  font-size: 1rem;
-}
-
-.auth-field input {
-  width: 100%;
-  height: 42px;
-  padding: 0 14px 0 40px;
-  border-radius: 8px;
-  border: none;
+.search-form-container .form-control:focus {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 15px rgba(42, 157, 143, 0.3);
   outline: none;
-  background: #f1f5f9;
-  font-size: 0.95rem;
 }
 
-.auth-field input:focus {
-  box-shadow: 0 0 0 2px #2563eb;
+/* Ajustes na Tabela para o modo Glass */
+.table-responsive {
+  margin-top: 1.5rem;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-/* BOTÃO */
-
-.auth-actions {
-  margin-top: 1.6rem;
+.table {
+  color: var(--color-text-light) !important;
+  margin-bottom: 0;
 }
 
-.btn-auth {
-  width: 100%;
-  height: 44px;
-  background: #2563eb;
-  border: none;
-  border-radius: 8px;
-  color: white;
+.table thead {
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid var(--glass-border);
+}
+
+.table thead th {
   font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.btn-auth:hover {
-  background: #1d4ed8;
-}
-
-/* LINKS */
-
-.auth-links {
-  text-align: center;
-  margin-top: 1.2rem;
-}
-
-.auth-links a {
+  text-transform: uppercase;
   font-size: 0.85rem;
-  color: #93c5fd;
+  letter-spacing: 1px;
+  border: none;
+}
+
+.table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+}
+
+/* Botões de Ação na Tabela */
+.btn-sm {
+  border-radius: 6px;
+  font-weight: 600;
+  margin: 0 2px;
+  transition: transform 0.2s;
+}
+
+.btn-sm:hover {
+  transform: translateY(-2px);
+}
+
+/* Efeito de hover nas linhas da tabela */
+.table-hover tbody tr:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  transition: background 0.3s ease;
+}
+
+/* Estilo para quando não há registros */
+.search-form-container p {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+/* Estilo base para transformar o link em botão */
+.btn-back-style, .btn-edit-style {
+  display: inline-block;
+  padding: 8px 16px;
   text-decoration: none;
-}
-
-.auth-links a:hover {
-  text-decoration: underline;
-}
-/* ================= LOGIN ================= */
-
-.login-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-card {
-  background: rgba(20, 20, 30, 0.95);
-  padding: 2rem 2.2rem;
-  border-radius: 14px;
-  width: 100%;
-  max-width: 360px;
-
-  box-shadow: 0 20px 50px rgba(0,0,0,0.65);
-}
-
-.login-title {
+  border-radius: 4px;
+  font-weight: bold;
   text-align: center;
-  color: #fff;
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin-bottom: 1.6rem;
+  margin: 5px;
 }
 
-/* ================= FIELDS ================= */
-
-.login-field {
-  margin-bottom: 1.1rem;
-}
-
-.login-field label {
-  display: block;
-  font-size: 0.8rem;
-  color: #cbd5f5;
-  margin-bottom: 0.3rem;
-}
-
-.login-input {
-  width: 100%;
-  padding: 0.5rem 0.6rem;
-  font-size: 0.9rem;
-  border-radius: 6px;
-  border: none;
-  outline: none;
-
-  background: #f1f5f9;
-}
-
-.login-input:focus {
-  box-shadow: 0 0 0 2px #2563eb;
-}
-
-/* ================= REMEMBER ================= */
-
-.login-remember {
+.actions-group {
   display: flex;
+  flex-direction: row;      
+  justify-content: center;  
+  gap: 12px;                
+  margin-top: 25px;         
+  width: 100%;
+}
+
+.btn-back-style {
+  display: inline-flex;
+  justify-content: center;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.8rem;
-  color: #cbd5f5;
-  margin-bottom: 1.2rem;
-}
-
-/* ================= BUTTON ================= */
-
-.login-button {
-  width: 100%;
-  padding: 0.6rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-
-  background: #2563eb;
-  color: white;
-  border: none;
+  width: 110px;            
+  height: 40px;            
   border-radius: 6px;
-
-  cursor: pointer;
-}
-
-.login-button:hover {
-  background: #1d4ed8;
-}
-
-/* ================= LINKS ================= */
-
-.login-links {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1.4rem;
-  font-size: 0.78rem;
-}
-
-.login-links a {
-  color: #93c5fd;
   text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  transition: background 0.3s ease;
+  color: white !important;
+  background-color: #1d4ed8; 
 }
 
-.login-links a:hover {
-  text-decoration: underline;
+.btn-edit-style {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 110px;            
+  height: 40px;            
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  transition: background 0.3s ease;
+  color: white !important;
+  background-color: #1d4ed8; 
 }
 
+.btn-delete {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 110px;            
+  height: 40px;            
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  transition: background 0.3s ease;
+  color: white !important;
+  background-color: #be1313; 
+
+}
+
+.btn-back-style:hover, .btn-edit-style:hover, .btn-delete:hover {
+  filter: brightness(85%);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-transition: background-color 5000s ease-in-out 0s; 
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: white !important; 
+  caret-color: white; 
+}
+
+.auth-field input, .login-input {
+  background: transparent !important;
+}
