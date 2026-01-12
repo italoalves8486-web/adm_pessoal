@@ -5,15 +5,8 @@
   
   <%# Renderiza o formulário de edição %>
   <%= render 'form', pessoa: @pessoa %>
-
-</div>
-
-<%# Links de Ação Abaixo do Card %>
-<div class="actions">
+<%= link_to 'Voltar', pessoas_path, class: "link-back" %>
   <%= link_to 'Mostrar', @pessoa, class: "btn-action-link" %>
-  
-  <%# BOTÃO APAGAR (AGORA SÓ ABRE O MODAL): %>
-  <%# O método é GET e a URL é '#' para que ele não tente deletar diretamente. O JS fará o DELETE. %>
   <%= button_to 'Apagar', '#', 
       method: :get, 
       class: "btn-delete", 
@@ -24,8 +17,6 @@
       } 
   %>
 </div>
-
-<%= link_to 'Voltar', pessoas_path, class: "link-back" %>
 
 <%# ---------------------------------------------------- %>
 <%# 3. MODAL DE CONFIRMAÇÃO (HTML) %>

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap');
 
+
 /* ================= VARIÁVEIS ================= */
 
 :root {
@@ -28,14 +29,46 @@ body {
 
   background:
     linear-gradient(
-      rgba(48, 46, 46, 0.6),
-      rgba(255, 255, 255, 0.6)
+      rgba(48, 46, 46, 0),
+      rgba(255, 255, 255, 0)
     ),
-    url("/ola.jpg") center / cover no-repeat fixed;
+    url("/micro.jpg") center / cover no-repeat fixed;
 
   backdrop-filter: blur(10px);
 
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+
+/* Filtros e Overlay (A sua camada de cor e blur) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Fica acima do vídeo, mas abaixo do texto */
+  
+  /* Seu degradê e blur */
+  background: linear-gradient(
+      rgba(48, 46, 46, 0.6),
+      rgba(255, 255, 255, 0)
+  );
+  backdrop-filter: blur(3px);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: white; /* Cor do texto para dar contraste */
+}
+
+/* Garante que o conteúdo apareça acima do fundo */
+.content {
+  position: relative;
+  z-index: 1;
 }
 
 /* ================= NAVBAR ================= */
@@ -89,28 +122,28 @@ body {
 
 
 .auth-wrapper {
-  display: flex;
-  flex-direction: column; 
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+  display: flex;             /* Ativa o Flexbox para organizar os elementos filhos */
+  flex-direction: column;    /* Coloca os itens um abaixo do outro (Título em cima, Card embaixo) */
+  align-items: center;       /* Centraliza horizontalmente (eixo X) */
+  justify-content: center;    /* Centraliza verticalmente (eixo Y) */
+  min-height: 100vh;         /* Garante que o container ocupe no mínimo 100% da altura da tela */
 }
 
 .auth-main-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 2rem;                   
-  font-weight: 400;                 
-  color: #ffffff;
-  margin-bottom: 6rem;
-  text-align: center;
-  text-transform: uppercase;        
-  letter-spacing: 3px;
+  font-family: 'Montserrat', sans-serif; /* Usa a fonte Montserrat (moderna e geométrica) */
+  font-size: 2rem;                       /* Define um tamanho grande para o título */
+  font-weight: 400;                      /* Deixa a letra com espessura normal (nem fina, nem negrito) */
+  color: #ffffff;                        /* Cor branca */
+  margin-bottom: 6rem;                   /* Cria um espaço bem grande entre o título e o card abaixo */
+  text-align: center;                    /* Garante que o texto esteja centralizado */
+  text-transform: uppercase;             /* Transforma todas as letras em MAIÚSCULAS */
+  letter-spacing: 3px;                   /* Aumenta o espaço entre cada letra (dá um ar sofisticado) */
 }
 
 .login-input {
-  color: white !important;
-
+  color: white !important; /* Força o texto digitado a ser branco, ignorando outras regras anteriores */
 }
+
 .home-wrapper {
   min-height: calc(100vh - 64px);
   display: flex;
@@ -119,27 +152,27 @@ body {
 }
 
 .home-container {
-  max-width: 720px;
-  width: 100%;
-  padding: 4rem 3.5rem;
+  max-width: 720px;       /* O conteúdo nunca passará de 720px de largura */
+  width: 100%;            /* Se a tela for pequena, ele ocupa 100% (responsivo) */
+  padding: 4rem 3.5rem;   /* Cria um preenchimento interno (folga) para o texto não bater na borda */
 }
 
 .home-title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+  font-size: 2.2rem;      /* Título levemente maior que o da tela de login */
+  font-weight: 700;       /* Usa negrito (bold) para dar destaque */
+  margin-bottom: 1rem;    /* Espaço pequeno para o texto que vem logo abaixo */
 }
 
 .home-subtitle {
-  font-size: 1.05rem;
-  color: var(--color-text-muted);
-  line-height: 1.6;
-  margin-bottom: 2.5rem;
+  font-size: 1.05rem;     /* Tamanho de leitura confortável */
+  color: var(--color-text-muted); /* Usa uma cor cinza definida em uma variável global */
+  line-height: 1.6;       /* Espaçamento entre linhas (melhora muito a leitura) */
+  margin-bottom: 2.5rem;  /* Espaço antes de chegar nos botões de ação */
 }
 
 .home-actions {
-  display: flex;
-  gap: 1rem;
+  display: flex;          /* Coloca os botões um ao lado do outro */
+  gap: 1rem;              /* Cria um espaço de 16px entre um botão e outro (sem usar margem) */
 }
 
 /* ================= CARD PADRÃO ================= */
@@ -215,71 +248,76 @@ table tr:hover {
 /* ================= BOTÕES ================= */
 
 .btn-auth {
-  width: 100%;
-  height: 50px;
-  background: #ffffff;
-  color: #1C2B57; /* Cor primária do seu root */
-  border: none;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
+  width: 100%;               /* Faz o botão ocupar toda a largura do card */
+  height: 50px;              /* Define uma altura fixa para um clique mais fácil */
+  background: #ffffff;       /* Cor de fundo branca */
+  color: #1C2B57;            /* Cor do texto (um azul escuro profundo) */
+  border: none;              /* Remove a borda padrão do navegador */
+  border-radius: 12px;       /* Deixa as quinas arredondadas (estilo moderno) */
+  font-weight: 700;          /* Deixa o texto em negrito (Bold) */
+  font-size: 1rem;           /* Tamanho padrão de leitura */
+  cursor: pointer;           /* Faz o mouse virar a "mãozinha" de link */
+  /* O segredo da animação: faz as mudanças de tamanho e cor serem suaves, não bruscas */
   transition: transform 0.2s, background 0.3s;
-  margin-top: 1rem;
+  margin-top: 1rem;          /* Dá um espaço acima do botão */
 }
 
 .btn-auth:hover {
-  background: rgba(255, 255, 255, 0.9);
-  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.9); /* O branco fica levemente transparente */
+  transform: translateY(-2px);           /* O botão "sobe" 2 pixels, dando efeito de flutuação */
 }
 
 .login-links {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: space-between;
+  margin-top: 2rem;           /* Afasta os links do botão de login */
+  display: flex;              /* Ativa o Flexbox */
+  justify-content: space-between; /* Empurra um link para a esquerda e o outro para a direita */
 }
 
 .login-links a {
-  color: #93c5fd;
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: color 0.2s;
+  color: #93c5fd;             /* Um tom de azul claro para destacar no fundo escuro */
+  text-decoration: none;      /* Remove aquele sublinhado padrão feio dos links */
+  font-size: 0.85rem;         /* Texto um pouco menor que o principal para criar hierarquia */
+  transition: color 0.2s;     /* Faz a troca de cor ser suave ao passar o mouse */
 }
 
+/* Quando você passa o mouse no link */
 .login-links a:hover {
-  color: #ffffff;
-  text-decoration: underline;
+  color: #ffffff;             /* O link brilha em branco puro */
+  text-decoration: underline; /* Aparece o sublinhado apenas agora, confirmando a seleção */
 }
 
 /* ================= AUTH / LOGIN ================= */
 
 .auth-wrapper {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  min-height: 100vh;      /* Ocupa pelo menos a altura inteira da tela */
+  display: flex;          /* Ativa o Flexbox */
+  align-items: center;    /* Centraliza o card verticalmente */
+  justify-content: center; /* Centraliza o card horizontalmente */
+  padding: 20px;          /* Evita que o card encoste nas bordas em celulares */
 }
 
 .auth-card {
-  max-width: 400px;
-  width: 100%;
-  padding: 3rem 2.5rem;
+  max-width: 400px;       /* O segredo do 'card pequeno': ele nunca passa de 400px */
+  width: 100%;            /* Em telas pequenas, ele se ajusta à largura disponível */
+  padding: 3rem 2.5rem;   /* Espaçamento interno generoso para o conteúdo "respirar" */
   
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  /* Efeito de Vidro */
+  background: var(--glass-bg);           /* Cor de fundo semi-transparente (ex: rgba(255,255,255,0.1)) */
+  backdrop-filter: var(--glass-blur);    /* Desfoca o que está atrás do card */
+  -webkit-backdrop-filter: var(--glass-blur); /* Versão para navegadores Safari/iOS */
   
-  text-align: center;
+  /* Bordas e Sombras */
+  border-radius: 20px;                   /* Curvatura acentuada das quinas */
+  border: 1px solid var(--glass-border); /* Borda fina que ajuda a definir o limite do vidro */
+  box-shadow: var(--glass-shadow);       /* Sombra projetada para dar profundidade */
+  
+  text-align: center;                    /* Centraliza todos os textos e botões dentro do card */
 }
 
 .auth-header h1 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: #ffffff;
+  font-size: 2rem;      /* Tamanho grande e legível */
+  margin-bottom: 2rem;  /* Espaço entre o título e o primeiro campo de input */
+  color: #ffffff;       /* Cor branca para alto contraste sobre o vidro */
 }
 
 /* ================= AUTH HEADER ================= */
@@ -591,7 +629,7 @@ table tr:hover {
   align-items: center;
   width: 110px;            
   height: 40px;            
-  border-radius: 6px;
+  border-radius: px;
   text-decoration: none;
   font-weight: 600;
   font-size: 14px;
@@ -628,10 +666,242 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-transition: background-color 5000s ease-in-out 0s; 
   transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: white !important; 
-  caret-color: white; 
+  -webkit-text-fill-color: rgb(255, 255, 255) !important; 
+  caret-color: rgb(255, 255, 255); 
 }
 
 .auth-field input, .login-input {
   background: transparent !important;
+}
+
+/* Container que ocupa a tela toda com a imagem de fundo */
+.background-container {
+  background-image: url('sua-imagem.jpg');
+  background-size: cover;      /* Garante que a imagem cubra toda a tela sem distorcer */
+  background-position: center; /* Centraliza a imagem de fundo */
+  height: 100vh;               /* Faz o container ter 100% da altura da janela (Viewport Height) */
+  display: flex;               /* Ativa o modo Flexbox para alinhar itens */
+  justify-content: center;     /* Alinha o card horizontalmente ao centro */
+  align-items: center;         /* Alinha o card verticalmente ao centro */
+}
+
+/* Estilo do Card */
+.register-card {
+  background: rgba(255, 255, 255, 0.1); /* Branco com apenas 10% de opacidade */
+  backdrop-filter: blur(10px);          /* O "pulo do gato": desfoca o que está atrás do card */
+  padding: 80px;                        /* Cria espaço interno para o texto não encostar na borda */
+  border-radius: 20px;                  /* Arredonda as quinas do card */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Uma borda fininha e clara para dar profundidade */
+  width: 100%;                          /* Ocupa a largura disponível... */
+  max-width: 400px;                     /* ...mas para de crescer quando chegar em 400px (o segredo do card pequeno) */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Sombra suave para o card "flutuar" na tela */
+  color: white;                         /* Garante que todo o texto dentro seja branco */
+}
+
+/* Ajuste dos inputs para ficarem modernos */
+input {
+  width: 100%;                 /* Faz o campo ocupar toda a largura do card */
+  padding: 12px;               /* Deixa o campo mais "gordinho" e fácil de clicar */
+  margin: 10px 0;              /* Dá distância entre um campo e outro */
+  border-radius: 8px;          /* Arredonda as bordas dos campos */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borda semi-transparente */
+  background: rgba(255, 255, 255, 0.2);       /* Fundo do campo levemente clareado */
+  color: white;                /* Cor do texto que o usuário digita */
+}
+
+/* Estilo do Botão */
+.btn-signup {
+  width: 100%;
+  padding: 12px;
+  background-color: #2fb191;   /* O tom de verde esmeralda da sua segunda imagem */
+  border: none;                /* Remove a borda padrão feia dos botões */
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;           /* Deixa o texto "Sign up" mais grosso */
+  cursor: pointer;             /* Faz o mouse virar a "mãozinha" ao passar por cima */
+  margin-top: 20px;            /* Separa o botão do último campo de senha */
+}
+
+/* Container das mensagens de erro */
+.devise-error-messages #error_explanation {
+  background: rgba(232, 74, 74, 0.15); /* Vermelho bem suave para não "matar" o efeito de vidro */
+  backdrop-filter: blur(4px);          /* Leve desfoque dentro do próprio erro */
+  border-left: 4px solid #e94a4a;      /* Barra lateral sólida para destacar que é um erro */
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  color: #ffb3b3;                      /* Tom de rosa claro para melhor legibilidade no escuro */
+  font-size: 0.85rem;
+  text-align: left;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Título do erro (Opcional: você pode deixar display:none se quiser esconder o "1 error prohibited...") */
+.devise-error-messages h2 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.devise-error-messages ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.devise-error-messages ul li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.4;
+}
+
+/* Adicionando oíone via CSS de forma mais elegante */
+.devise-error-messages ul li::before {
+  content: "●"; 
+  color: #e94a4a;
+  font-size: 0.7rem;
+}
+
+.forgot-password-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Título específico da tela */
+.forgot-password-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Texto de instrução (ex: "Enviaremos um e-mail para você") */
+.forgot-password-instructions {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Ajuste nos campos do formulário para não quebrarem o layout */
+.forgot-password-card .auth-field {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+
+.forgot-password-links {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column; 
+  gap: 10px;
+  align-items: center;
+}
+
+.forgot-password-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.forgot-password-links a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.btn-forgot {
+  background: var(--color-accent);
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+}
+
+.btn-forgot:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+.auth-field .icon-box svg {
+  filter: brightness(0) invert(1) !important; 
+  
+  width: 22px !important; 
+  height: 22px !important;
+  opacity: 0.9; 
+}
+
+.auth-field:focus-within .icon-box svg {
+  filter: brightness(0) invert(1);
+  opacity: 1;
+  drop-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.auth-field .login-input {
+  color: #ffffff !important;
+}
+
+.auth-field .login-input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.auth-links a,
+.login-links a,
+.forgot-password-links a,
+.navbar .nav-link {
+  color: #ffffff !important; /* Força o branco em todos os contextos de autenticação */
+  text-decoration: none;
+  opacity: 0.8; /* Leve transparência para não cansar o olho */
+  transition: opacity 0.2s, text-decoration 0.2s;
+}
+
+/* Efeito de Hover unificado */
+.auth-links a:hover,
+.login-links a:hover,
+.forgot-password-links a:hover {
+  opacity: 1;
+  text-decoration: underline !important;
+  color: #ffffff !important;
+}
+
+/* Ajuste específico para os links do Devise que podem estar dentro de listas */
+.devise-links a {
+  color: #ffffff !important;
+}
+/* Remove a centralização forçada que quebrou o layout */
+.video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.background-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* O conteúdo volta a se comportar normalmente */
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 80px; /* Espaço para não bater na navbar */
 }

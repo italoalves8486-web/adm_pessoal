@@ -31,7 +31,12 @@
   </head>
 
   <body>
-
+<body>
+    <div class="video-container">
+  <video id="bg-video" autoplay muted playsinline class="background-video" onended="this.pause()">
+    <source src="/predio.mp4" type="video/mp4">
+  </video>
+</div>
     <!-- Navbar -->
     <%= render "shared/navbar" %>
 
@@ -45,3 +50,17 @@
  
  </body>
 </html>
+
+<script>
+  const video = document.getElementById('bg-video');
+
+  video.addEventListener('timeupdate', function() {
+    // Definimos que o efeito começa faltando 3 segundos para o fim
+    const tempoRestante = video.duration - video.currentTime;
+
+    if (tempoRestante <= 3 && tempoRestante > 0) {
+      // Reduz a velocidade de 1.0 (normal) para 0.2 (bem lento) proporcionalmente
+      // Isso evita o impacto visual de uma parada brusca
+      video.playbackRate = Math.max(0.2, tempoRestante / 3);
+    }
+  });

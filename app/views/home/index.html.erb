@@ -13,8 +13,8 @@ Cadastre, visualize e gerencie pessoas de forma organizada e segura.
 
 
 <div class="home-actions">
-<%= link_to "Novo Cadastro", new_pessoa_path, class: "btn-main" %>
-<%= link_to "Ver Registros", pessoas_path, class: "btn-outline" %>
+<%= button_to "Ver Registros", pessoas_path, method: :get %>
+<%= button_to "Novo Cadastro", new_pessoa_path, method: :get %>
 </div>
 
 
