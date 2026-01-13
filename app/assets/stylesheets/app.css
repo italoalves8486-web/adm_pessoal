@@ -559,3 +559,182 @@ a {
   box-sizing: border-box;
 }
 
+/* ==========================================================================
+   7. SEÇÃO: DETALHES (SHOW)
+   ========================================================================== */
+
+/* Container para centralizar o card de detalhes */
+.details-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 130px; 
+  min-height: 100vh;
+}
+
+/* O Card de Detalhes em si */
+.details-card {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+}
+
+.details-info {
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 15px;
+}
+
+.details-info p {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.details-info strong {
+  color: var(--color-accent); /* Usa o verde que você definiu */
+  margin-right: 10px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+/* Estilização dos links de ação (Voltar, Editar, Apagar) */
+.details-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.details-actions a {
+  flex: 1;
+  text-align: center;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s;
+  font-size: 0.9rem;
+}
+
+/* Botão Editar */
+.btn-edit {
+  background: var(--color-microsoft) !important;
+  color: white !important;
+  border-radius: 10px;
+}
+
+/* Botão Voltar */
+.btn-back {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  border-radius: 10px;
+}
+
+/* Botão Apagar */
+.btn-delete {
+  background: var(--color-danger) !important;
+  color: white !important;
+  border-radius: 10px;
+}
+
+.details-actions a:hover {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   7. SEÇÃO: VISUALIZAÇÃO DE DETALHES (SHOW)
+   ========================================================================== */
+
+.details-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 100px; /* Espaço para a navbar */
+  min-height: 100vh;
+}
+
+.details-card {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  animation: fadeSlide 0.6s ease forwards;
+}
+
+.info-group {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-accent); /* O verde que você definiu */
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.info-value {
+  font-size: 1.2rem;
+  color: #ffffff;
+  font-weight: 400;
+}
+
+/* Botões de ação na parte inferior do card */
+.details-footer {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.details-footer a, .details-footer button {
+  flex: 1;
+  text-decoration: none;
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.btn-back-outline {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white !important;
+}
+
+.btn-edit-action {
+  background: var(--color-microsoft);
+  color: white !important;
+}
+
+.btn-delete-action {
+  background: var(--color-danger);
+  color: white !important;
+}
+
+.details-footer a:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.2);
+}
+.table .btn-edit, .table .btn-delete, .table .btn-back {
+  width: auto !important;
+  height: auto !important;
+  min-width: 70px;
+}

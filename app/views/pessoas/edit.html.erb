@@ -1,94 +1,63 @@
-<h1>Editar Pessoa</h1>
+<div class="page-content">
+  <div class="card">
+    <h1 class="card-title">Editar Pessoa</h1>
+    
+    <%# Renderiza o formulário de edição %>
+    <%= render 'form', pessoa: @pessoa %>
 
-<%# ENVOLVE O FORMULÁRIO NO CARD ESCURO %>
-<div class="card">
-  
-  <%# Renderiza o formulário de edição %>
-  <%= render 'form', pessoa: @pessoa %>
-<%= link_to 'Voltar', pessoas_path, class: "link-back" %>
-  <%= link_to 'Mostrar', @pessoa, class: "btn-action-link" %>
-  <%= button_to 'Apagar', '#', 
-      method: :get, 
-      class: "btn-delete", 
-      data: { 
-        action: 'open-delete-modal', # Ação JS para abrir
-        modal_target: 'delete-modal',
-        pessoa_id: @pessoa.id # Passa o ID para o JS saber qual excluir
-      } 
-  %>
-</div>
-
-<%# ---------------------------------------------------- %>
-<%# 3. MODAL DE CONFIRMAÇÃO (HTML) %>
-<%# Este bloco de HTML é o popup que aparece na tela. %>
-<%# ---------------------------------------------------- %>
-<div id="delete-modal" class="custom-modal" style="display: none;">
-  <div class="modal-content card">
-    <h2>Confirmação de Exclusão</h2>
-    <p>Você tem certeza que deseja **APAGAR** a pessoa: <strong><%= @pessoa.nome %></strong>?</p>
-    <p>Esta ação não pode ser desfeita.</p>
-
-    <div class="modal-actions">
-      <%# Botão Cancelar (apenas fecha o modal via JS) %>
-      <button class="btn-action-link" data-action="close-modal">Cancelar</button>
+    <div class="details-actions" style="margin-top: 25px;">
+      <%# Botão Voltar (Estilo Cinza/Transparente) %>
+      <%= link_to 'Voltar', pessoas_path, class: "btn-back" %>
       
-      <%# Botão Confirmar (este sim envia a requisição DELETE via Rails) %>
-      <%= button_to 'Confirmar Exclusão', @pessoa, method: :delete, class: "btn-delete btn-delete-confirm", id: "confirm-delete-button" %>
+      <%# Botão Mostrar (Estilo Azul Microsoft) %>
+      <%= link_to 'Mostrar', @pessoa, class: "btn-edit" %>
+      
+      <%# Botão Apagar (Estilo Vermelho) %>
+      <button type="button" class="btn-delete" data-action="open-delete-modal" data-pessoa-id="<%= @pessoa.id %>">
+        Apagar
+      </button>
     </div>
   </div>
 </div>
 
-<%# ---------------------------------------------------- %>
-<%# 4. LÓGICA DO MODAL (JAVASCRIPT) %>
-<%# Este script controla a abertura/fechamento e atualiza o botão de confirmação. %>
-<%# ---------------------------------------------------- %>
+<%# --- MODAL DE CONFIRMAÇÃO --- %>
+<div id="delete-modal" class="custom-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+  <div class="card" style="max-width: 450px; text-align: center;">
+    <h2 class="card-title" style="font-size: 1.4rem;">Confirmação</h2>
+    <p style="margin-bottom: 20px;">Você tem certeza que deseja <strong>APAGAR</strong>: <br><span style="color: var(--color-danger);"><%= @pessoa.nome %></span>?</p>
+
+    <div class="details-actions">
+      <button class="btn-back" data-action="close-modal">Cancelar</button>
+      <%= button_to 'Confirmar', @pessoa, method: :delete, class: "btn-delete", id: "confirm-delete-button" %>
+    </div>
+  </div>
+</div>
+
 <script>
-  // Previne a execução se o Rails Turbo não estiver pronto
+  // Script atualizado para funcionar com o design
   document.addEventListener('turbo:load', () => {
-    
     const deleteModal = document.getElementById('delete-modal');
     if (!deleteModal) return;
 
-    // Função para abrir o modal
-    const openModal = (event) => {
-      // Impede a ação padrão (navegar para '#')
-      event.preventDefault();
-      
-      const pessoaId = event.currentTarget.dataset.pessoaId;
-      const confirmButton = document.getElementById('confirm-delete-button');
-
-      // Atualiza a URL de ação do botão de confirmação para garantir que a exclusão é correta
-      if (confirmButton && pessoaId) {
-        // Assume que a URL de exclusão é /pessoas/:id
-        confirmButton.action = `/pessoas/${pessoaId}`;
-      }
-      
-      // Torna o modal visível
+    const openModal = (e) => {
+      e.preventDefault();
       deleteModal.style.display = 'flex';
     };
 
-    // Função para fechar o modal
     const closeModal = () => {
       deleteModal.style.display = 'none';
     };
 
-    // Encontra todos os botões que devem abrir o modal
-    const openButtons = document.querySelectorAll('[data-action="open-delete-modal"]');
-    openButtons.forEach(button => {
-      button.addEventListener('click', openModal);
+    document.querySelectorAll('[data-action="open-delete-modal"]').forEach(btn => {
+      btn.addEventListener('click', openModal);
     });
 
-    // Encontra o botão de fechar (Cancelar)
-    const closeButton = deleteModal.querySelector('[data-action="close-modal"]');
-    if (closeButton) {
-      closeButton.addEventListener('click', closeModal);
-    }
+    document.querySelectorAll('[data-action="close-modal"]').forEach(btn => {
+      btn.addEventListener('click', closeModal);
+    });
 
-    // Fecha o modal ao clicar fora dele
-    window.addEventListener('click', (event) => {
-      if (event.target === deleteModal) {
-        closeModal();
-      }
+    window.addEventListener('click', (e) => {
+      if (e.target === deleteModal) closeModal();
     });
   });
 </script>

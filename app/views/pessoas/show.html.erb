@@ -1,56 +1,38 @@
 <%# app/views/pessoas/show.html.erb %>
 
-<div class="header-show">
-  <h1>Visualizar Pessoa: <%= @pessoa.nome %></h1>
-</div>
-
-<%# ESTE CARD VAI EXIBIR OS DETALHES DA PESSOA %>
-<div class="card card-details">
-  
-  <p>
-    <strong>Nome:</strong>
-    <%= @pessoa.nome %>
-  </p>
-  
-  <p>
-    <strong>CPF:</strong>
-    <%= @pessoa.cpf %>
-  </p>
-  
-  <p>
-    <strong>RG:</strong>
-    <%= @pessoa.rg %>
-  </p>
-  
-  <p>
-    <strong>Email:</strong>
-    <%= @pessoa.email %>
-  </p>
-  
-  <p>
-    <strong>Telefone:</strong>
-    <%= @pessoa.telefone %>
-  </p>
-
-<div class="actions-group">
-    <%= link_to 'Voltar', pessoas_path, class: "btn-back-style" %>
+<div class="details-wrapper">
+  <div class="details-card">
     
-    <%= link_to 'Editar', edit_pessoa_path(@pessoa), class: "btn-edit-style" %>
-    
-    <%= link_to 'Apagar', pessoa_path(@pessoa), 
-        class: "btn-delete", 
-        data: { 
-          turbo_method: :delete, 
-          turbo_confirm: "Tem certeza que deseja apagar #{@pessoa.nome}?",
-          controller: "confirm-delete", 
-          action: "click->confirm-delete#open",
-          name: @pessoa.nome 
-        } 
-    %>
-  </div>
+    <h1 class="card-title" style="text-align: left; margin-bottom: 30px;">
+      <i class="bi bi-person-badge me-2"></i> Dados Cadastrados
+    </h1>
 
-<%# Links de Ação - NOVO POSICIONAMENTO %>
-<div class="footer-actions-container">
+    <div class="details-info">
+      <p><strong>Nome:</strong> <%= @pessoa.nome %></p>
+      <p><strong>CPF:</strong> <%= @pessoa.cpf %></p>
+      <p><strong>RG:</strong> <%= @pessoa.rg %></p>
+      <p><strong>Email:</strong> <%= @pessoa.email %></p>
+      <p><strong>Telefone:</strong> <%= @pessoa.telefone %></p>
+    </div>
+
+    <div class="details-actions">
+      <%= link_to pessoas_path, class: "btn-back" do %>
+        <i class="bi bi-arrow-left"></i> Voltar
+      <% end %>
+      
+      <%= link_to edit_pessoa_path(@pessoa), class: "btn-edit" do %>
+        <i class="bi bi-pencil"></i> Editar
+      <% end %>
+      
+      <%= link_to pessoa_path(@pessoa), 
+          class: "btn-delete", 
+          data: { 
+            turbo_method: :delete, 
+            turbo_confirm: "Tem certeza que deseja apagar #{@pessoa.nome}?"
+          } do %>
+        <i class="bi bi-trash"></i> Apagar
+      <% end %>
+    </div>
 
   </div>
 </div>

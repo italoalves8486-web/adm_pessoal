@@ -20,14 +20,17 @@
               <%= f.search_field :email_cont, class: "form-control", placeholder: "Buscar por e-mail" %>
             </div>
             <div class="col-md-12 d-flex gap-2 mt-2 justify-content-end">
-              <%= f.submit "Pesquisar", class: "btn btn-primary" %>
-              <%= link_to "Limpar", pessoas_path, class: "btn btn-secondary" %>
+              <%# Botão Pesquisar com estilo Azul Microsoft %>
+              <%= f.submit "Pesquisar", class: "btn-edit", style: "width: auto; padding: 10px 25px;" %>
+              <%# Botão Limpar com estilo Transparente/Voltar %>
+              <%= link_to "Limpar", pessoas_path, class: "btn-back", style: "width: auto; padding: 10px 25px;" %>
             </div>
           </div>
         <% end %>
 
         <div class="d-flex justify-content-end mb-3">
-          <%= link_to new_pessoa_path, class: "btn btn-success" do %>
+          <%# Botão Nova Pessoa com estilo Verde Accent %>
+          <%= link_to new_pessoa_path, class: "btn-auth", style: "width: auto; padding: 10px 25px; margin-top: 0;" do %>
             <i class="fas fa-plus-circle"></i> Nova Pessoa
           <% end %>
         </div>
@@ -40,7 +43,7 @@
                   <th>Nome</th>
                   <th>CPF</th>
                   <th>E-mail</th>
-                  <th>Ações</th>
+                  <th style="width: 250px;">Ações</th> <%# Largura fixa para os botões não quebrarem %>
                 </tr>
               </thead>
               <tbody>
@@ -50,9 +53,18 @@
                     <td><%= pessoa.cpf %></td>
                     <td><%= pessoa.email %></td>
                     <td>
-                      <%= link_to "Ver", pessoa, class: "btn btn-sm btn-primary" %>
-                      <%= link_to "Editar", edit_pessoa_path(pessoa), class: "btn btn-sm btn-warning" %>
-                      <%= link_to "Excluir", pessoa, method: :delete, data: { confirm: "Tem certeza?" }, class: "btn btn-sm btn-danger" %>
+                      <div class="d-flex gap-2">
+                        <%# Estilo "Ver" usando o cinza do btn-back %>
+                        <%= link_to "Ver", pessoa, class: "btn-back", style: "font-size: 0.8rem; padding: 5px 12px;" %>
+                        
+                        <%# Estilo "Editar" usando o btn-edit (Azul) %>
+                        <%= link_to "Editar", edit_pessoa_path(pessoa), class: "btn-edit", style: "font-size: 0.8rem; padding: 5px 12px;" %>
+                        
+                        <%# Estilo "Excluir" usando o btn-delete (Vermelho) %>
+                        <%= link_to "Excluir", pessoa, 
+                            data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" }, 
+                            class: "btn-delete", style: "font-size: 0.8rem; padding: 5px 12px;" %>
+                      </div>
                     </td>
                   </tr>
                 <% end %>
