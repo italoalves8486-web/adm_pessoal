@@ -1,914 +1,561 @@
+/* ==========================================================================
+   1. VARIÁVEIS E BASE (O CORAÇÃO DO DESIGN)
+   ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap');
 
-
-/* ================= VARIÁVEIS ================= */
-
 :root {
-  --color-primary: #1C2B57;
   --color-accent: #2A9D8F;
   --color-danger: #e94a4a;
-
-  --color-text-light: #E5E7EB;
-  --color-text-muted: #CBD5F5;
-
-  /* GLASS */
+  --color-microsoft: #0078d4;
   --glass-bg: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.18);
-  --glass-shadow: 0 25px 60px rgba(0,0,0,0.6);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
   --glass-blur: blur(14px);
+  --input-border: #ffffff;
 }
 
-/* ================= RESET ================= */
-
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
-  min-height: 100vh;
-
-  background:
-    linear-gradient(
-      rgba(48, 46, 46, 0),
-      rgba(255, 255, 255, 0)
-    ),
-    url("/micro.jpg") center / cover no-repeat fixed;
-
-  backdrop-filter: blur(10px);
-
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  background: url("/micro.jpg") center / cover no-repeat fixed;
 }
 
-
-/* Filtros e Overlay (A sua camada de cor e blur) */
+/* Filtro escuro para destacar o Glassmorphism */
 body::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0; /* Fica acima do vídeo, mas abaixo do texto */
-  
-  /* Seu degradê e blur */
-  background: linear-gradient(
-      rgba(48, 46, 46, 0.6),
-      rgba(255, 255, 255, 0)
-  );
-  backdrop-filter: blur(3px);
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -1;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
+  backdrop-filter: blur(2px);
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: system-ui, -apple-system, sans-serif;
-  color: white; /* Cor do texto para dar contraste */
-}
-
-/* Garante que o conteúdo apareça acima do fundo */
-.content {
-  position: relative;
-  z-index: 1;
-}
-
-/* ================= NAVBAR ================= */
-
-.navbar {
-  background: rgba(0,0,0,0.55) !important;
-  backdrop-filter: blur(6px);
-}
-
-.navbar .nav-link {
-  color: #ffffff !important;
-  font-weight: 500;
-}
-
-.navbar .nav-link:hover {
-  color: #3487d4 !important;
-}
-
-/* LOGOUT ICON */
-
-.logout-icon {
-  font-size: 22px;
-  color: #ffffff;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.logout-icon:hover {
-  color: #dc3545;
-}
-
-/* ================= GLASS CARD BASE ================= */
-
-.card,
-.home-container,
-.auth-card,
-.login-card {
+/* ==========================================================================
+   2. ESTILO PADRÃO DOS CARDS (GLASSMORFISMO COMUM)
+   ========================================================================== */
+.glass-card-base, .auth-card, .home-container, .search-form-container {
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-
-  border-radius: 20px;
   border: 1px solid var(--glass-border);
-
+  border-radius: 20px;
   box-shadow: var(--glass-shadow);
-  color: #ffffff;
-  
+  padding: 40px;
+  animation: fadeSlide 0.6s ease forwards;
 }
 
-/* ================= HOME ================= */
-
-
-.auth-wrapper {
-  display: flex;             /* Ativa o Flexbox para organizar os elementos filhos */
-  flex-direction: column;    /* Coloca os itens um abaixo do outro (Título em cima, Card embaixo) */
-  align-items: center;       /* Centraliza horizontalmente (eixo X) */
-  justify-content: center;    /* Centraliza verticalmente (eixo Y) */
-  min-height: 100vh;         /* Garante que o container ocupe no mínimo 100% da altura da tela */
-}
-
-.auth-main-title {
-  font-family: 'Montserrat', sans-serif; /* Usa a fonte Montserrat (moderna e geométrica) */
-  font-size: 2rem;                       /* Define um tamanho grande para o título */
-  font-weight: 400;                      /* Deixa a letra com espessura normal (nem fina, nem negrito) */
-  color: #ffffff;                        /* Cor branca */
-  margin-bottom: 6rem;                   /* Cria um espaço bem grande entre o título e o card abaixo */
-  text-align: center;                    /* Garante que o texto esteja centralizado */
-  text-transform: uppercase;             /* Transforma todas as letras em MAIÚSCULAS */
-  letter-spacing: 3px;                   /* Aumenta o espaço entre cada letra (dá um ar sofisticado) */
-}
-
-.login-input {
-  color: white !important; /* Força o texto digitado a ser branco, ignorando outras regras anteriores */
-}
-
-.home-wrapper {
-  min-height: calc(100vh - 64px);
+/* ==========================================================================
+   3. SEÇÃO: AUTENTICAÇÃO (LOGIN, CADASTRO, ESQUECI SENHA)
+   ========================================================================== */
+auth-wrapper {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.home-container {
-  max-width: 720px;       /* O conteúdo nunca passará de 720px de largura */
-  width: 100%;            /* Se a tela for pequena, ele ocupa 100% (responsivo) */
-  padding: 4rem 3.5rem;   /* Cria um preenchimento interno (folga) para o texto não bater na borda */
-}
-
-.home-title {
-  font-size: 2.2rem;      /* Título levemente maior que o da tela de login */
-  font-weight: 700;       /* Usa negrito (bold) para dar destaque */
-  margin-bottom: 1rem;    /* Espaço pequeno para o texto que vem logo abaixo */
-}
-
-.home-subtitle {
-  font-size: 1.05rem;     /* Tamanho de leitura confortável */
-  color: var(--color-text-muted); /* Usa uma cor cinza definida em uma variável global */
-  line-height: 1.6;       /* Espaçamento entre linhas (melhora muito a leitura) */
-  margin-bottom: 2.5rem;  /* Espaço antes de chegar nos botões de ação */
-}
-
-.home-actions {
-  display: flex;          /* Coloca os botões um ao lado do outro */
-  gap: 1rem;              /* Cria um espaço de 16px entre um botão e outro (sem usar margem) */
-}
-
-/* ================= CARD PADRÃO ================= */
-
-.card {
-  padding: 24px;
-  max-width: 900px;
-  margin: auto;
-  animation: fadeSlide 0.6s ease forwards;
-  margin-top: 50px;
-}
-
-/* ================= CARD DO CADASTRO ================= */
-.card-cadastro {
-  background: rgba(255, 255, 255, 0.1); /* Branco bem transparente */
-  backdrop-filter: blur(15px);          /* O segredo do efeito fosco */
-  -webkit-backdrop-filter: blur(15px);   /* Suporte para Safari */
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 40px;
+  min-height: 100vh;
   width: 100%;
-  max-width: 450px; /* Evita que o input estique na tela toda */
+  width: 400px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-/* ================= TÍTULOS ================= */
-
-h1 {
+/* Título Principal acima do Card */
+.auth-main-title {
+  font-size: 2rem;
   text-align: center;
-  font-weight: 700;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  margin-top: 40px;
+}
+
+/* Card com Glassmorphism Refinado */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.1); /* Brilho leve */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  margin-top: 90px;
+}
+
+/* Cabeçalho Interno do Card */
+.auth-header h1 {
+  margin-top: 0;
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
   color: #fff;
 }
 
-/* ================= TABELAS ================= */
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: white;
-}
-
-table th,
-table td {
-  padding: 15px 10px;
-}
-
-table thead {
-  border-bottom: 2px solid #4a90e2;
-}
-
-table tr:hover {
-  background: rgba(255,255,255,0.05);
-}
-
-/* ================= FORMULÁRIOS ================= */
-
-.field label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #ccc;
-}
-
-
-.field input {
-  width: 100%;
-  padding: 14px;
-  border-radius: 8px;
-  border: none;
-  margin-bottom: 20px;
-  background: rgba(255,255,255,0.85);
-}
-
-/* ================= BOTÕES ================= */
-
-.btn-auth {
-  width: 100%;               /* Faz o botão ocupar toda a largura do card */
-  height: 50px;              /* Define uma altura fixa para um clique mais fácil */
-  background: #ffffff;       /* Cor de fundo branca */
-  color: #1C2B57;            /* Cor do texto (um azul escuro profundo) */
-  border: none;              /* Remove a borda padrão do navegador */
-  border-radius: 12px;       /* Deixa as quinas arredondadas (estilo moderno) */
-  font-weight: 700;          /* Deixa o texto em negrito (Bold) */
-  font-size: 1rem;           /* Tamanho padrão de leitura */
-  cursor: pointer;           /* Faz o mouse virar a "mãozinha" de link */
-  /* O segredo da animação: faz as mudanças de tamanho e cor serem suaves, não bruscas */
-  transition: transform 0.2s, background 0.3s;
-  margin-top: 1rem;          /* Dá um espaço acima do botão */
-}
-
-.btn-auth:hover {
-  background: rgba(255, 255, 255, 0.9); /* O branco fica levemente transparente */
-  transform: translateY(-2px);           /* O botão "sobe" 2 pixels, dando efeito de flutuação */
-}
-
-.login-links {
-  margin-top: 2rem;           /* Afasta os links do botão de login */
-  display: flex;              /* Ativa o Flexbox */
-  justify-content: space-between; /* Empurra um link para a esquerda e o outro para a direita */
-}
-
-.login-links a {
-  color: #93c5fd;             /* Um tom de azul claro para destacar no fundo escuro */
-  text-decoration: none;      /* Remove aquele sublinhado padrão feio dos links */
-  font-size: 0.85rem;         /* Texto um pouco menor que o principal para criar hierarquia */
-  transition: color 0.2s;     /* Faz a troca de cor ser suave ao passar o mouse */
-}
-
-/* Quando você passa o mouse no link */
-.login-links a:hover {
-  color: #ffffff;             /* O link brilha em branco puro */
-  text-decoration: underline; /* Aparece o sublinhado apenas agora, confirmando a seleção */
-}
-
-/* ================= AUTH / LOGIN ================= */
-
-.auth-wrapper {
-  min-height: 100vh;      /* Ocupa pelo menos a altura inteira da tela */
-  display: flex;          /* Ativa o Flexbox */
-  align-items: center;    /* Centraliza o card verticalmente */
-  justify-content: center; /* Centraliza o card horizontalmente */
-  padding: 20px;          /* Evita que o card encoste nas bordas em celulares */
-}
-
-.auth-card {
-  max-width: 400px;       /* O segredo do 'card pequeno': ele nunca passa de 400px */
-  width: 100%;            /* Em telas pequenas, ele se ajusta à largura disponível */
-  padding: 3rem 2.5rem;   /* Espaçamento interno generoso para o conteúdo "respirar" */
-  
-  /* Efeito de Vidro */
-  background: var(--glass-bg);           /* Cor de fundo semi-transparente (ex: rgba(255,255,255,0.1)) */
-  backdrop-filter: var(--glass-blur);    /* Desfoca o que está atrás do card */
-  -webkit-backdrop-filter: var(--glass-blur); /* Versão para navegadores Safari/iOS */
-  
-  /* Bordas e Sombras */
-  border-radius: 20px;                   /* Curvatura acentuada das quinas */
-  border: 1px solid var(--glass-border); /* Borda fina que ajuda a definir o limite do vidro */
-  box-shadow: var(--glass-shadow);       /* Sombra projetada para dar profundidade */
-  
-  text-align: center;                    /* Centraliza todos os textos e botões dentro do card */
-}
-
-.auth-header h1 {
-  font-size: 2rem;      /* Tamanho grande e legível */
-  margin-bottom: 2rem;  /* Espaço entre o título e o primeiro campo de input */
-  color: #ffffff;       /* Cor branca para alto contraste sobre o vidro */
-}
-
-/* ================= AUTH HEADER ================= */
-
-.auth-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.auth-header h1 {
-  font-size: 1.6rem;
-}
-
-.auth-header p {
-  font-size: 0.9rem;
-  color: #9ca3af;
-}
-
-/* ================= INPUTS COM ÍCONE ================= */
-
+/* Campos de Input */
 .auth-field {
   display: flex;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
+  height: 60px; /* Um pouco mais alto para conforto */
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.1); 
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0 18px;
   transition: all 0.3s ease;
-  overflow: hidden;
+  .auth-field {
+  background: rgba(255, 255, 255, 0.05) !important; /* Fundo levemente fumê fixo */
+}
 }
 
 .auth-field:focus-within {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  border-color: var(--color-accent);
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 15px rgba(42, 157, 143, 0.3);
 }
 
-.auth-field .icon-box {
-  min-width: 50px;
+/* Ajuste nos Ícones dentro dos Inputs */
+.icon-box {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 12px;
 }
 
-.auth-field .icon-box svg {
-  filter: invert(1) brightness(2); 
-  width: 24px !important; 
-  height: 24px !important;
+.icon-box svg {
+  width: 22px !important; /* Tamanho consistente */
+  height: 22px !important;
+  stroke: #ffffff !important; /* Garante que o ícone seja branco */
+  opacity: 0.9;
 }
 
-.auth-field .login-input {
+.login-input {
   flex: 1;
-  height: 50px;
-  border: none !important; 
-  background: transparent !important;
-  color: #ffffff28;
+  background: transparent !important; /* Mantém transparente */
+  border: none !important;
+  color: white !important; /* Garante que o texto digitado seja branco */
+  font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
-  padding: 0 15px 0 5px;
-  outline: none;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.login-input:-webkit-autofill,
+.login-input:-webkit-autofill:hover, 
+.login-input:-webkit-autofill:focus, 
+.login-input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s; /* "Truque" para o fundo não mudar */
+  -webkit-text-fill-color: white !important; /* Mantém a cor da letra branca no autofill */
+  caret-color: white; /* Cor do cursor piscando */
 }
 
-.auth-field .login-input::placeholder {
+
+.login-input::placeholder {
   color: rgba(255, 255, 255, 0.6);
-}
-
-/* ================= AUTH ACTIONS ================= */
-
-.auth-actions {
-  margin-top: 2rem; 
 }
 
 .btn-auth {
   width: 100%;
-  height: 48px; 
-  background: var(--color-accent); 
-  border: none;
-  border-radius: 12px;
-  color: white;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.btn-auth:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-.btn-auth:hover {
-  background: #a2a5af;
-}
-.auth-field input:focus, 
-.login-input:focus,
-.form-control:focus {
-  outline: none !important; 
-  box-shadow: none !important; 
-}
-
-.auth-field:focus-within {
-  border-color: rgba(255, 255, 255, 0.5); 
-  background: rgba(255, 255, 255, 0.15); 
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
-}
-
-/* ================= LOGIN ================= */
-
-.login-title {
-  text-align: center;
-  font-size: 1.6rem;
-  margin-bottom: 1.6rem;
-}
-
-.login-input {
-  width: 100%;
-  padding: 0.6rem;
-  border-radius: 8px;
-  border: none;
-  background: rgba(255,255,255,0.85);
-}
-
-.login-input:focus {
-  box-shadow: 0 0 0 2px #2563eb;
-}
-
-.login-button {
-  width: 100%;
-  padding: 0.6rem;
-  background: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-}
-
-.login-button:hover {
-  background: #1d4ed8;
-}
-
-/* ================= LINKS ================= */
-
-.auth-links,
-.login-links {
-  text-align: center;
-  margin-top: 1.2rem;
-}
-
-.auth-links a,
-.login-links a {
-  font-size: 0.85rem;
-  color: #93c5fd;
-  text-decoration: none;
-}
-
-.auth-links a:hover,
-.login-links a:hover {
-  text-decoration: underline;
-}
-
-/* ================= ANIMAÇÕES ================= */
-
-@keyframes fadeSlide {
-  from {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.page-content {
-  padding-top: 2rem;
-  padding-bottom: 4rem;
-}
-/* ===============PESSOAS==============*/
-
-
-/* Título fora do card */
-.card-title h1 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-/* O card de busca e listagem */
-.search-form-container.card {
-  max-width: 1100px; /* Um pouco mais largo para a tabela */
-  width: 95%;
-  margin: 0 auto;
-  padding: 40px;
-}
-
-/* Estilização dos inputs de busca dentro do vidro */
-.search-form-container .form-control {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  border-radius: 10px;
-  padding: 12px;
-  transition: all 0.3s ease;
-}
-
-.search-form-container .form-control::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.search-form-container .form-control:focus {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: var(--color-accent);
-  box-shadow: 0 0 15px rgba(42, 157, 143, 0.3);
-  outline: none;
-}
-
-/* Ajustes na Tabela para o modo Glass */
-.table-responsive {
-  margin-top: 1.5rem;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.table {
-  color: var(--color-text-light) !important;
-  margin-bottom: 0;
-}
-
-.table thead {
-  background: rgba(255, 255, 255, 0.1);
-  border-bottom: 2px solid var(--glass-border);
-}
-
-.table thead th {
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
-  border: none;
-}
-
-.table td {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 1rem;
-}
-
-/* Botões de Ação na Tabela */
-.btn-sm {
-  border-radius: 6px;
-  font-weight: 600;
-  margin: 0 2px;
-  transition: transform 0.2s;
-}
-
-.btn-sm:hover {
-  transform: translateY(-2px);
-}
-
-/* Efeito de hover nas linhas da tabela */
-.table-hover tbody tr:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
-  transition: background 0.3s ease;
-}
-
-/* Estilo para quando não há registros */
-.search-form-container p {
-  color: var(--color-text-muted);
-  font-style: italic;
-}
-/* Estilo base para transformar o link em botão */
-.btn-back-style, .btn-edit-style {
-  display: inline-block;
-  padding: 8px 16px;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: bold;
-  text-align: center;
-  margin: 5px;
-}
-
-.actions-group {
-  display: flex;
-  flex-direction: row;      
-  justify-content: center;  
-  gap: 12px;                
-  margin-top: 25px;         
-  width: 100%;
-}
-
-.btn-back-style {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 110px;            
-  height: 40px;            
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  border: none;
-  transition: background 0.3s ease;
-  color: white !important;
-  background-color: #1d4ed8; 
-}
-
-.btn-edit-style {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 110px;            
-  height: 40px;            
-  border-radius: px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  border: none;
-  transition: background 0.3s ease;
-  color: white !important;
-  background-color: #1d4ed8; 
-}
-
-.btn-delete {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 110px;            
-  height: 40px;            
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  border: none;
-  transition: background 0.3s ease;
-  color: white !important;
-  background-color: #be1313; 
-
-}
-
-.btn-back-style:hover, .btn-edit-style:hover, .btn-delete:hover {
-  filter: brightness(85%);
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active {
-  -webkit-transition: background-color 5000s ease-in-out 0s; 
-  transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: rgb(255, 255, 255) !important; 
-  caret-color: rgb(255, 255, 255); 
-}
-
-.auth-field input, .login-input {
-  background: transparent !important;
-}
-
-/* Container que ocupa a tela toda com a imagem de fundo */
-.background-container {
-  background-image: url('sua-imagem.jpg');
-  background-size: cover;      /* Garante que a imagem cubra toda a tela sem distorcer */
-  background-position: center; /* Centraliza a imagem de fundo */
-  height: 100vh;               /* Faz o container ter 100% da altura da janela (Viewport Height) */
-  display: flex;               /* Ativa o modo Flexbox para alinhar itens */
-  justify-content: center;     /* Alinha o card horizontalmente ao centro */
-  align-items: center;         /* Alinha o card verticalmente ao centro */
-}
-
-/* Estilo do Card */
-.register-card {
-  background: rgba(255, 255, 255, 0.1); /* Branco com apenas 10% de opacidade */
-  backdrop-filter: blur(10px);          /* O "pulo do gato": desfoca o que está atrás do card */
-  padding: 80px;                        /* Cria espaço interno para o texto não encostar na borda */
-  border-radius: 20px;                  /* Arredonda as quinas do card */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Uma borda fininha e clara para dar profundidade */
-  width: 100%;                          /* Ocupa a largura disponível... */
-  max-width: 400px;                     /* ...mas para de crescer quando chegar em 400px (o segredo do card pequeno) */
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Sombra suave para o card "flutuar" na tela */
-  color: white;                         /* Garante que todo o texto dentro seja branco */
-}
-
-/* Ajuste dos inputs para ficarem modernos */
-input {
-  width: 100%;                 /* Faz o campo ocupar toda a largura do card */
-  padding: 12px;               /* Deixa o campo mais "gordinho" e fácil de clicar */
-  margin: 10px 0;              /* Dá distância entre um campo e outro */
-  border-radius: 8px;          /* Arredonda as bordas dos campos */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Borda semi-transparente */
-  background: rgba(255, 255, 255, 0.2);       /* Fundo do campo levemente clareado */
-  color: white;                /* Cor do texto que o usuário digita */
-}
-
-/* Estilo do Botão */
-.btn-signup {
-  width: 100%;
-  padding: 12px;
-  background-color: #2fb191;   /* O tom de verde esmeralda da sua segunda imagem */
-  border: none;                /* Remove a borda padrão feia dos botões */
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;           /* Deixa o texto "Sign up" mais grosso */
-  cursor: pointer;             /* Faz o mouse virar a "mãozinha" ao passar por cima */
-  margin-top: 20px;            /* Separa o botão do último campo de senha */
-}
-
-/* Container das mensagens de erro */
-.devise-error-messages #error_explanation {
-  background: rgba(232, 74, 74, 0.15); /* Vermelho bem suave para não "matar" o efeito de vidro */
-  backdrop-filter: blur(4px);          /* Leve desfoque dentro do próprio erro */
-  border-left: 4px solid #e94a4a;      /* Barra lateral sólida para destacar que é um erro */
-  padding: 12px 16px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  color: #ffb3b3;                      /* Tom de rosa claro para melhor legibilidade no escuro */
-  font-size: 0.85rem;
-  text-align: left;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Título do erro (Opcional: você pode deixar display:none se quiser esconder o "1 error prohibited...") */
-.devise-error-messages h2 {
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  color: #ffffff;
-}
-
-.devise-error-messages ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.devise-error-messages ul li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  line-height: 1.4;
-}
-
-/* Adicionando oíone via CSS de forma mais elegante */
-.devise-error-messages ul li::before {
-  content: "●"; 
-  color: #e94a4a;
-  font-size: 0.7rem;
-}
-
-.forgot-password-wrapper {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-/* Título específico da tela */
-.forgot-password-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-/* Texto de instrução (ex: "Enviaremos um e-mail para você") */
-.forgot-password-instructions {
-  font-size: 0.95rem;
-  color: var(--color-text-muted);
-  margin-bottom: 2rem;
-  text-align: center;
-  line-height: 1.5;
-}
-
-/* Ajuste nos campos do formulário para não quebrarem o layout */
-.forgot-password-card .auth-field {
-  width: 100%;
-  margin-bottom: 1.5rem;
-}
-
-
-.forgot-password-links {
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column; 
-  gap: 10px;
-  align-items: center;
-}
-
-.forgot-password-links a {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: all 0.2s ease;
-}
-
-.forgot-password-links a:hover {
-  color: #ffffff;
-  text-decoration: underline;
-}
-
-.btn-forgot {
+  height: 55px;
   background: var(--color-accent);
   color: white;
   border: none;
-  padding: 12px;
-  width: 100%;
   border-radius: 12px;
+  font-size: 1.1rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   cursor: pointer;
-  transition: transform 0.2s, filter 0.2s;
+  transition: all 0.3s transform;
+  margin-top: 10px;
 }
 
-.btn-forgot:hover {
+.btn-auth:hover {
   filter: brightness(1.1);
   transform: translateY(-2px);
-}
-.auth-field .icon-box svg {
-  filter: brightness(0) invert(1) !important; 
-  
-  width: 22px !important; 
-  height: 22px !important;
-  opacity: 0.9; 
+  box-shadow: 0 5px 15px rgba(42, 157, 143, 0.4);
 }
 
-.auth-field:focus-within .icon-box svg {
-  filter: brightness(0) invert(1);
-  opacity: 1;
-  drop-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+.login-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
 }
 
-.auth-field .login-input {
-  color: #ffffff !important;
-}
-
-.auth-field .login-input::placeholder {
-  color: rgba(255, 255, 255, 0.5) !important;
-}
-
-.auth-links a,
-.login-links a,
-.forgot-password-links a,
-.navbar .nav-link {
-  color: #ffffff !important; /* Força o branco em todos os contextos de autenticação */
+.login-links a {
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
-  opacity: 0.8; /* Leve transparência para não cansar o olho */
-  transition: opacity 0.2s, text-decoration 0.2s;
+  font-size: 0.85rem;
+  transition: 0.3s;
+  font-weight: 400;
 }
 
-/* Efeito de Hover unificado */
-.auth-links a:hover,
-.login-links a:hover,
-.forgot-password-links a:hover {
-  opacity: 1;
-  text-decoration: underline !important;
-  color: #ffffff !important;
+.login-links a:hover {
+  color: white;
+  text-decoration: underline;
 }
 
-/* Ajuste específico para os links do Devise que podem estar dentro de listas */
-.devise-links a {
-  color: #ffffff !important;
+/* ==========================================================================
+   4. SEÇÃO: HOME (BOAS-VINDAS)
+   ========================================================================== */
+.home-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; 
+  padding: 20px;
 }
-/* Remove a centralização forçada que quebrou o layout */
-.video-container {
+
+.home-container {
+  width: 100%;
+  max-width: 600px; 
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 50px 40px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  animation: fadeSlide 0.8s ease out;
+}
+
+.home-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.home-subtitle {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 3rem;
+  font-weight: 400;
+}
+
+.home-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap; 
+}
+
+.home-actions form, .home-actions div {
+  flex: 1;
+  min-width: 200px;
+}
+
+.home-actions button {
+  width: 100%;
+  height: 55px;
+  padding: 0 20px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.home-actions button:first-child, .btn-primary {
+  background: var(--color-microsoft);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 120, 212, 0.3);
+}
+
+.home-actions button:last-child {
+  background: var(--color-accent); 
+  color: white;
+  box-shadow: 0 4px 15px rgba(42, 157, 143, 0.3);
+}
+
+.home-actions button:hover {
+  filter: brightness(1.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.auth-wrapper, .home-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   5. SEÇÃO: LISTAGEM (TABELAS E BUSCA)
+   ========================================================================== */
+.search-form-container {
+  width: 95%;
+  max-width: 1200px; /* Card largo para dados */
+  margin: 50px auto;
+}
+
+.table-responsive {
+  margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent !important;
+}
+
+.table thead { background: rgba(255, 255, 255, 0.1); }
+.table th, .table td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+.table tr:hover { background: rgba(255, 255, 255, 0.05); }
+
+/* ==========================================================================
+   6. UTILITÁRIOS E ANIMAÇÕES
+   ========================================================================== */
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.icon-box svg { width: 20px; height: 20px; stroke: white; opacity: 0.8; }
+
+.btn-auth:hover, .btn-primary:hover, .home-actions button:hover {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+}
+
+.navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  z-index: -1;
-  overflow: hidden;
+  height: 70px;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.2) !important; 
+  backdrop-filter: blur(15px) saturate(150%);
+  -webkit-backdrop-filter: blur(15px) saturate(150%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  box-sizing: border-box;
 }
 
-.background-video {
+.navbar, .navbar a, .navbar span, .navbar div {
+  color: #ffffff !important; 
+  text-decoration: none !important; 
+}
+
+
+
+
+a {
+  text-decoration: none !important;
+}
+
+.login-links {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.login-links a {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  color: white !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.login-links a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: white;
+  transform: translateY(-2px);
+}
+
+
+/*card de cadastro*/
+
+.page-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px 20px;
+  box-sizing: border-box;
+}
+
+.page-content .card {
+  margin-top: 70px; 
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
 }
 
-/* O conteúdo volta a se comportar normalmente */
-.content {
-  position: relative;
-  z-index: 1;
+.card-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.field {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  margin-left: 5px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.field input {
+  height: 50px;
+  background: rgba(0, 0, 0, 0.2) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 12px;
+  padding: 0 15px;
+  color: white !important;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.field input:focus {
+  border-color: var(--color-accent) !important;
+  background: rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 0 15px rgba(42, 157, 143, 0.3);
+}
+
+/* Botões de Ação */
+.actions {
+  margin-top: 30px;
+}
+
+.actions input[type="submit"] {
   width: 100%;
-  padding-bottom: 5px;
+  height: 55px;
+  background: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden; /* Impede a barra de rolagem global */
+.actions input[type="submit"]:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(42, 157, 143, 0.4);
 }
+
+.page-content .card button, 
+.page-content .card input[type="button"],
+.page-content .card form[button_to] {
+  margin-top: 15px;
+  width: 100%;
+}
+
+.page-content button {
+  width: 100%;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.page-content button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+}
+
+.field input:-webkit-autofill {
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-page .card {
+   max-width: 500px;
+}
+
+/*css de registro*/
+
+
+.page-content, .form-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 130px !important; /* Altura da Nav + respiro */
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* 2. CARD DE CADASTRO (Nova Pessoa) - Fica ESTREITO */
+/* Este seletor foca no card que está dentro de .page-content mas NÃO é busca */
+.page-content .card:not(.search-form-container) {
+  width: 100%;
+  max-width: 500px !important; /* Mantém compacto */
+  margin: 0 auto;
+}
+
+/* 3. CARD DO INDEX (Listagem de Pessoas) - Fica LARGO */
+/* No seu Index, a div tem a classe .search-form-container */
+.search-form-container.card {
+  width: 95% !important;
+  max-width: 1200px !important; /* Abre espaço para a tabela */
+  margin: 20px auto !important;
+  padding: 30px !important;
+}
+
+/* Ajuste específico para os campos dentro do card de cadastro */
+.field input {
+  width: 100%; /* Garante que ocupem toda a largura do card de 500px */
+  box-sizing: border-box;
+}
+
