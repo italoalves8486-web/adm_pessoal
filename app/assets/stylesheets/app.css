@@ -510,7 +510,7 @@ table tr:hover {
   max-width: 1100px; /* Um pouco mais largo para a tabela */
   width: 95%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 40px;
 }
 
 /* Estilização dos inputs de busca dentro do vidro */
@@ -902,6 +902,13 @@ input {
   position: relative;
   z-index: 1;
   width: 100%;
-  min-height: 100vh;
-  padding-top: 80px; /* Espaço para não bater na navbar */
+  padding-bottom: 5px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Impede a barra de rolagem global */
 }
