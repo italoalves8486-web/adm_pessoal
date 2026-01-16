@@ -2,62 +2,37 @@
   <div class="card">
     <h1 class="card-title">Editar Pessoa</h1>
     
-    <%# Renderiza o formulário de edição %>
+    <%# Formulário de edição %>
     <%= render 'form', pessoa: @pessoa %>
 
-    <div class="details-actions" style="margin-top: 25px;">
-      <%# Botão Voltar (Estilo Cinza/Transparente) %>
-      <%= link_to 'Voltar', pessoas_path, class: "btn-back" %>
-      
-      <%# Botão Mostrar (Estilo Azul Microsoft) %>
-      <%= link_to 'Mostrar', @pessoa, class: "btn-edit" %>
-      
-      <%# Botão Apagar (Estilo Vermelho) %>
-      <button type="button" class="btn-delete" data-action="open-delete-modal" data-pessoa-id="<%= @pessoa.id %>">
-        Apagar
-      </button>
+    <%# CONTROLLER STIMULUS INICIA AQUI %>
+    <div data-controller="confirm-delete">
+      <div class="details-actions" style="margin-top: 25px;">
+        <%= link_to 'Voltar', pessoas_path, class: "btn-back" %>
+        <%= link_to 'Mostrar', @pessoa, class: "btn-edit" %>
+
+      </div>
+
+      <%# MODAL DE CONFIRMAÇÃO %>
+      <div id="delete-modal" 
+           class="custom-modal" 
+           style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(5px);"
+           data-confirm-delete-target="modal"
+           data-action="click->confirm-delete#clickOutside">
+        
+        <div class="card" style="max-width: 450px; text-align: center;">
+          <h2 class="card-title">Confirmação</h2>
+          <p>Você tem certeza que deseja <strong>APAGAR</strong>: <br>
+             <span style="color: var(--color-danger);"><%= @pessoa.nome %></span>?</p>
+
+          <div class="details-actions">
+            <button type="button" class="btn-back" data-action="confirm-delete#close">Cancelar</button>
+            <%= button_to 'Confirmar', @pessoa, method: :delete, class: "btn-delete" %>
+          </div>
+        </div>
+      </div>
     </div>
+    <%# FIM DO CONTROLLER %>
+
   </div>
 </div>
-
-<%# --- MODAL DE CONFIRMAÇÃO --- %>
-<div id="delete-modal" class="custom-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
-  <div class="card" style="max-width: 450px; text-align: center;">
-    <h2 class="card-title" style="font-size: 1.4rem;">Confirmação</h2>
-    <p style="margin-bottom: 20px;">Você tem certeza que deseja <strong>APAGAR</strong>: <br><span style="color: var(--color-danger);"><%= @pessoa.nome %></span>?</p>
-
-    <div class="details-actions">
-      <button class="btn-back" data-action="close-modal">Cancelar</button>
-      <%= button_to 'Confirmar', @pessoa, method: :delete, class: "btn-delete", id: "confirm-delete-button" %>
-    </div>
-  </div>
-</div>
-
-<script>
-  // Script atualizado para funcionar com o design
-  document.addEventListener('turbo:load', () => {
-    const deleteModal = document.getElementById('delete-modal');
-    if (!deleteModal) return;
-
-    const openModal = (e) => {
-      e.preventDefault();
-      deleteModal.style.display = 'flex';
-    };
-
-    const closeModal = () => {
-      deleteModal.style.display = 'none';
-    };
-
-    document.querySelectorAll('[data-action="open-delete-modal"]').forEach(btn => {
-      btn.addEventListener('click', openModal);
-    });
-
-    document.querySelectorAll('[data-action="close-modal"]').forEach(btn => {
-      btn.addEventListener('click', closeModal);
-    });
-
-    window.addEventListener('click', (e) => {
-      if (e.target === deleteModal) closeModal();
-    });
-  });
-</script>

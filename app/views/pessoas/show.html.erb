@@ -24,15 +24,5 @@
         <i class="bi bi-pencil"></i> Editar
       <% end %>
       
-      <%= link_to pessoa_path(@pessoa), 
-          class: "btn-delete", 
-          data: { 
-            turbo_method: :delete, 
-            turbo_confirm: "Tem certeza que deseja apagar #{@pessoa.nome}?"
-          } do %>
-        <i class="bi bi-trash"></i> Apagar
-      <% end %>
-    </div>
-
   </div>
 </div>

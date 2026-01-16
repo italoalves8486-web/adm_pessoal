@@ -7,6 +7,10 @@ class Pessoa < ApplicationRecord
   validates :rg, uniqueness: true, presence: true
   validates :email, uniqueness: true, presence: true
   validates :telefone, uniqueness: true, presence: true
+  class Pessoa < ApplicationRecord
+  # Esta linha impede que o cadastro seja salvo se não seguir o padrão
+  validates :telefone, format: { with: /\A\(\d{2}\)\s\d{5}-\d{4}\z/, message: "deve estar no formato (69) 99999-9999" }
+  end
 
   # --- 2. RANSACK (ALLOWLIST DE CAMPOS BUSCÁVEIS) ---
   def self.ransackable_attributes(auth_object = nil)

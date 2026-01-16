@@ -25,13 +25,19 @@
       </div>
 
       <div class="field">
-        <%= form.label :telefone %>
-        <%= form.text_field :telefone %>
-      </div>
+  <%= form.label :telefone %>
+  <%= form.text_field :telefone, 
+      placeholder: "(69) 99379-6609", 
+      data: { controller: "mask" },
+      pattern: '\(\d{2}\)\s\d{5}-\d{4}', 
+      title: "O formato deve ser (69) 99999-9999",
+      required: true %>
+</div>
 
       <div class="actions">
         <%= form.submit "Criar Pessoa" %>
       </div>
+      
 
     <% end %>
 

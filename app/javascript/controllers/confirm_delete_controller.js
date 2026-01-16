@@ -1,30 +1,24 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["modal", "name", "form"]
+  static targets = [ "modal" ]
 
+  // Abre o modal
   open(event) {
     event.preventDefault()
-
-    this.url = event.currentTarget.getAttribute("href")
-    this.nameTarget.textContent = event.currentTarget.dataset.name
-
-    this.modalTarget.classList.remove("hidden")
-    this.modalTarget.classList.add("fade-in")
+    this.modalTarget.style.display = 'flex'
   }
 
-  close() {
-    this.modalTarget.classList.remove("fade-in")
-    this.modalTarget.classList.add("fade-out")
-
-    setTimeout(() => {
-      this.modalTarget.classList.add("hidden")
-      this.modalTarget.classList.remove("fade-out")
-    }, 200)
+  // Fecha o modal
+  close(event) {
+    if (event) event.preventDefault()
+    this.modalTarget.style.display = 'none'
   }
 
-  confirm() {
-    this.formTarget.action = this.url
-    this.formTarget.submit()
+  // Fecha se clicar fora da caixa branca
+  clickOutside(event) {
+    if (event.target === this.modalTarget) {
+      this.close()
+    }
   }
 }

@@ -43,7 +43,7 @@
                   <th>Nome</th>
                   <th>CPF</th>
                   <th>E-mail</th>
-                  <th>telefone
+                  <th>Telefone</th> <th class="text-center">Ações</th> </tr>
               </thead>
               <tbody>
                 <% @pessoas.each do |pessoa| %>
@@ -51,8 +51,10 @@
                     <td><%= pessoa.nome %></td>
                     <td><%= pessoa.cpf %></td>
                     <td><%= pessoa.email %></td>
+                    <td><%= pessoa.telefone %></td>
                     <td>
-                      <div class="d-flex gap-2">
+                    
+                     <div class="d-flex gap-2 justify-content-center">
                         <%# Estilo "Ver" usando o cinza do btn-back %>
                         <%= link_to "Ver", pessoa, class: "btn-back", style: "font-size: 0.8rem; padding: 5px 12px;" %>
                         

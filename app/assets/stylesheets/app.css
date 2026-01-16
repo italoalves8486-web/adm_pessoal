@@ -23,7 +23,7 @@ body {
   overflow-x: hidden;
   font-family: 'Montserrat', sans-serif;
   color: white;
-  background: url("/micro.jpg") center / cover no-repeat fixed;
+   background: radial-gradient(circle, #000000 60%, #5fbea2 100%);
 }
 
 /* Filtro escuro para destacar o Glassmorphism */
@@ -64,6 +64,7 @@ auth-wrapper {
   padding: 20px;
   box-sizing: border-box;
 }
+
 
 /* Título Principal acima do Card */
 .auth-main-title {
@@ -783,4 +784,24 @@ a {
   border-color: var(--color-accent) !important;
   box-shadow: 0 0 15px rgba(42, 157, 143, 0.3);
   background: rgba(0, 0, 0, 0.4) !important;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-icon {
+  position: absolute;
+  right: 15px; 
+  top: 50%;
+  transform: translateY(-50%); /* Centraliza verticalmente */
+  cursor: pointer;
+  color: #ffffff !important; /* Força a cor branca para teste */
+  z-index: 10; /* Garante que ele fique acima do input */
+}
+
+.toggle-icon:hover {
+  color: #fff;
 }
