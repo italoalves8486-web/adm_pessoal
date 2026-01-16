@@ -43,8 +43,7 @@
                   <th>Nome</th>
                   <th>CPF</th>
                   <th>E-mail</th>
-                  <th style="width: 250px;">Ações</th> <%# Largura fixa para os botões não quebrarem %>
-                </tr>
+                  <th>telefone
               </thead>
               <tbody>
                 <% @pessoas.each do |pessoa| %>
@@ -61,11 +60,12 @@
                         <%= link_to "Editar", edit_pessoa_path(pessoa), class: "btn-edit", style: "font-size: 0.8rem; padding: 5px 12px;" %>
                         
                         <%# Estilo "Excluir" usando o btn-delete (Vermelho) %>
-                        <%= link_to "Excluir", pessoa, 
-                            data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" }, 
-                            class: "btn-delete", style: "font-size: 0.8rem; padding: 5px 12px;" %>
-                      </div>
-                    </td>
+                      <%= button_to "Excluir", pessoa, 
+                           method: :delete, 
+                           onclick: "return confirm('Tem certeza que deseja excluir?')", 
+                           class: "btn-delete", 
+                           style: "font-size: 0.8rem; padding: 5px 12px; border: none; cursor: pointer;" %>
+                    </td> 
                   </tr>
                 <% end %>
               </tbody>

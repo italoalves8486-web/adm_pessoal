@@ -35,10 +35,16 @@ class PessoasController < ApplicationController
     end
   end
 
-  def destroy
-    @pessoa.destroy
-    redirect_to pessoas_url, notice: "Pessoa apagada com sucesso."
+def destroy
+  @pessoa = Pessoa.find(params[:id])
+  @pessoa.destroy
+
+  respond_to do |format|
+    # O status: :see_other é essencial para o Turbo entender o redirecionamento após um DELETE
+    format.html { redirect_to pessoas_path, status: :see_other, notice: "Pessoa excluída com sucesso." }
+    format.json { head :no_content }
   end
+end
 
   private
 
